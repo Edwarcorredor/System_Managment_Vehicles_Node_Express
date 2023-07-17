@@ -27,3 +27,6 @@ El objetivo general de este proyecto es desarrollar un sistema de control y moni
 
 
 
+#### Diagrama
+
+![](/home/apolt01-019/Documents/Sistema-de-control-y-monitoreo-de-flotas-de-vehiculos-autonomos/img/Screenshot from 2023-07-17 17-26-32.png)
