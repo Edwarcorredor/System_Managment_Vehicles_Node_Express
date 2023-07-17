@@ -8,7 +8,7 @@ El proyecto consiste en desarrollar un sistema de control y monitoreo de flotas 
 
 ### *General:*
 
-Optimizar el control y monitoreo de una flota de vehículos autónomos mediante una base de datos eficiente.
+El objetivo general de este proyecto es desarrollar un sistema de control y monitoreo de flotas de vehículos autónomos que permita gestionar eficientemente la operación, seguridad y mantenimiento de los vehículos, garantizando un desempeño óptimo y confiable de la flota. El sistema se enfocará en recopilar y analizar datos en tiempo real de los vehículos, rutas, sensores y actividades de mantenimiento, con el fin de brindar información precisa y actualizada sobre el estado de la flota, identificar incidencias, realizar seguimiento de rutas planificadas y optimizar las actividades de mantenimiento. 
 
 ### Especifico:
 
