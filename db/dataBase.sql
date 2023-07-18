@@ -1,55 +1,80 @@
-CREATE DATABASE vehiculos_autonomos
+CREATE DATABASE empresa_vehiculos;
 
-USE vehiculos_autonomos
+USE empresa_vehiculos;
 
-CREATE TABLE vehiculos{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    numero_serie VARCHAR NOT NULL,
-    placa VARCHAR NOT NULL,
-    estado VARCHAR,
-    modelo VARCHAR NOT NULL,
-    marca VARCHAR NOT NULL
-};
+CREATE TABLE EMPRESA (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100),
+  direccion VARCHAR(200)
+);
 
-CREATE TABLE proveedores{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(255) NOT NULL,
-    direccion VARCHAR(255) NOT NULL,
-    telefono INT,
-    email VARCHAR(255) NOT NULL,
-}
+CREATE TABLE VEHICULO (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  numero_serie VARCHAR(50),
+  placa VARCHAR(20),
+  estado VARCHAR(50),
+  modelo VARCHAR(100),
+  marca VARCHAR(100),
+  id_empresa INT,
+  FOREIGN KEY (id_empresa) REFERENCES EMPRESA(id)
+);
 
-CREATE TABLE repuestos{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255),
-    precio_unitario FLOAT NOT NULL,
-    id proveedor INT
-};
+CREATE TABLE ALARMA (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  id_vehiculo INT,
+  id_clase_alarma INT,
+  fecha DATE,
+  FOREIGN KEY (id_vehiculo) REFERENCES VEHICULO(id),
+  FOREIGN KEY (id_clase_alarma) REFERENCES CLASE_ALARMA(id)
+);
 
-CREATE TABLE mantenimiento{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    descripcion VARCHAR(255) NOT NULL,
-    id_repuestos INT NOT NULL
-};
+CREATE TABLE CLASE_ALARMA (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100),
+  descripcion VARCHAR(200),
+  id_mantenimiento INT,
+  FOREIGN KEY (id_mantenimiento) REFERENCES MANTENIMIENTO(id)
+);
 
-CREATE TABLE clase_alarmas{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR,
-    id_mantenimiento INT NOT NULL
-};
+CREATE TABLE MANTENIMIENTO (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  descripcion VARCHAR(200),
+  id_repuesto INT,
+  FOREIGN KEY (id_repuesto) REFERENCES REPUESTO(id)
+);
 
-CREATE TABLE alarmas{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_vehiculo INT NOT NULL,
-    id_clases_alarmas INT NOT NULL,
-    fecha TIMESTAMP
-};
+CREATE TABLE DESCRIPCION_MANTENIMIENTO (
+  id_mantenimiento INT,
+  descripcion VARCHAR(200),
+  FOREIGN KEY (id_mantenimiento) REFERENCES MANTENIMIENTO(id)
+);
 
-CREATE TABLE registro_mantenimiento{
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_alarma INT NOT NULL,
-    fecha TIMESTAMP,
-    costo FLOAT INT NOT NULL
-};
+CREATE TABLE REPUESTO (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100),
+  descripcion VARCHAR(200),
+  precio_unitario DECIMAL(10, 2)
+);
+
+CREATE TABLE PROVEEDOR (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(100),
+  direccion VARCHAR(200),
+  telefono VARCHAR(20),
+  email VARCHAR(100)
+);
+
+CREATE TABLE REPUESTO_PROVEEDOR (
+  id_repuesto INT,
+  id_proveedor INT,
+  FOREIGN KEY (id_repuesto) REFERENCES REPUESTO(id),
+  FOREIGN KEY (id_proveedor) REFERENCES PROVEEDOR(id)
+);
+
+CREATE TABLE REGISTRO_MANTENIMIENTO (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  id_alarma INT,
+  fecha DATE,
+  costo DECIMAL(10, 2),
+  FOREIGN KEY (id_alarma) REFERENCES ALARMA(id)
+);
