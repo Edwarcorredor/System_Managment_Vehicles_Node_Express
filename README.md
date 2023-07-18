@@ -1,4 +1,4 @@
-# Sistema de control y monitoreo de flotas de vehículos autónomos
+# Sistema de control y monitoreo de vehículos autónomos
 
 ## *Resumen*
 
