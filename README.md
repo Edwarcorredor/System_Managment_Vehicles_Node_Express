@@ -29,3 +29,6 @@ El objetivo general de este proyecto es desarrollar un sistema de control y moni
 
 #### Diagrama
 
+![Screenshot from 2023-07-18 14-34-16](https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-flotas-de-vehiculos-autonomos/assets/104398132/e0c05274-97aa-4a30-a400-d942519349c5)
+
+
