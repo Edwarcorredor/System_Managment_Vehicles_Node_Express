@@ -23,7 +23,7 @@ CREATE TABLE ALARMA (
   id INT PRIMARY KEY AUTO_INCREMENT,
   id_vehiculo INT,
   id_clase_alarma INT,
-  fecha DATE,
+  fecha TIMESTAMP,
   FOREIGN KEY (id_vehiculo) REFERENCES VEHICULO(id),
   FOREIGN KEY (id_clase_alarma) REFERENCES CLASE_ALARMA(id)
 );
@@ -41,12 +41,6 @@ CREATE TABLE MANTENIMIENTO (
   descripcion VARCHAR(200),
   id_repuesto INT,
   FOREIGN KEY (id_repuesto) REFERENCES REPUESTO(id)
-);
-
-CREATE TABLE DESCRIPCION_MANTENIMIENTO (
-  id_mantenimiento INT,
-  descripcion VARCHAR(200),
-  FOREIGN KEY (id_mantenimiento) REFERENCES MANTENIMIENTO(id)
 );
 
 CREATE TABLE REPUESTO (
@@ -78,3 +72,4 @@ CREATE TABLE REGISTRO_MANTENIMIENTO (
   costo DECIMAL(10, 2),
   FOREIGN KEY (id_alarma) REFERENCES ALARMA(id)
 );
+
