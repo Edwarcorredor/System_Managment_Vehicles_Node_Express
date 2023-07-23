@@ -27,6 +27,6 @@ El objetivo general de este proyecto es desarrollar un sistema de control y moni
 
 #### Diagrama
 
-<img width="764" alt="Captura de pantalla 2023-07-22 125253" src="https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-vehiculos-autonomos/assets/104398132/29c7776f-186c-4676-921a-a080ce2a1e57">
+<img width="496" alt="Captura de pantalla 2023-07-22 214031" src="https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-vehiculos-autonomos/assets/104398132/51b0e631-7f18-4f49-a286-97ba70483bf2">
 
 
