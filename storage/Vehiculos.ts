@@ -35,4 +35,12 @@ export class Vehiculos{
     PLATE: string
     @Expose({name: "estado"})
     STATE: string
+
+    constructor(p1:number, p2:number, p3:string, p4:string, p5:string){
+        this.EMPRESA_ID = p1;
+        this.MODELO_ID = p2;
+        this.SERIE_NUMERO = p3;
+        this.PLATE = p4;
+        this.STATE = p5;
+    }
 }

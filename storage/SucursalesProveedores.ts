@@ -3,7 +3,7 @@ import { Type, Transform, Expose } from "class-transformer";
 export class SurcursalesProveedores{
     /**
     ** Variables de entradas:
-    ** id_proveedor, nombre, direccion 
+    ** id_proveedor, nombre, direccion, telefono, email
     */
 
     @Expose({name: "id_proveedor"})
@@ -21,4 +21,16 @@ export class SurcursalesProveedores{
     NAME: string
     @Expose({name: "direccion"})
     ADDRESS: string
+    @Expose({name: "telefono"})
+    PHONE: string
+    @Expose({name: "email"})
+    EMAIL: string
+
+    constructor(p1:number, p2:string, p3:string, p4:string, p5:string){
+        this.PROVEEDOR_ID = p1;
+        this.NAME = p2;
+        this.ADDRESS = p3;
+        this.PHONE = p4;
+        this.EMAIL = p5;
+    }
 }

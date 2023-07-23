@@ -29,4 +29,9 @@ export class RegistrosMantenimientos{
         }    
     })
     COST: number
+
+    constructor(p1:number, p2:number){
+        this.ALARMA_ID = p1;
+        this.COST = p2;
+    }
 }

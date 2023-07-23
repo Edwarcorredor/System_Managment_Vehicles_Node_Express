@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --quiet app.js"
+    "dev": "nodemon --quiet app.js",
+    "tsc": "tsc -w"
   },
   "keywords": [],
   "author": "",

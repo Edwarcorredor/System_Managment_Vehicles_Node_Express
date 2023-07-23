@@ -28,4 +28,8 @@ export class Alarmas{
     })
     CLASE_ALARMA_ID: number
 
+    constructor(p1:number, p2:number){
+        this.VEHICULO_ID = p1;
+        this.CLASE_ALARMA_ID = p2;
+    }
 }
