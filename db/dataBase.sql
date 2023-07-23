@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS empresa(
   id INT AUTO_INCREMENT,
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(255) NOT NULL,
+  telefono VARCHAR(20),
+  email VARCHAR(100),
+  sitio_web VARCHAR(100),
   PRIMARY KEY (id)
 );
 
@@ -16,6 +19,8 @@ CREATE TABLE IF NOT EXISTS empresa(
 CREATE TABLE IF NOT EXISTS marca(
   id INT AUTO_INCREMENT,
   nombre VARCHAR(100) NOT NULL,
+  pais_origen VARCHAR(100),
+  sitio_web VARCHAR(100),
   PRIMARY KEY (id)
 );
 
@@ -24,6 +29,7 @@ CREATE TABLE IF NOT EXISTS modelo(
   id INT AUTO_INCREMENT,
   id_marca INT NOT NULL,
   nombre VARCHAR(100) NOT NULL,
+  anio_lanzamiento INT,
   PRIMARY KEY (id),
   FOREIGN KEY (id_marca) REFERENCES marca (id)
 );
@@ -33,6 +39,9 @@ CREATE TABLE IF NOT EXISTS proveedor(
   id INT AUTO_INCREMENT,
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(255) NOT NULL,
+  telefono VARCHAR(20),
+  email VARCHAR(100),
+  sitio_web VARCHAR(100),
   PRIMARY KEY (id)
 );
 
@@ -42,6 +51,8 @@ CREATE TABLE IF NOT EXISTS sucursal_proveedor(
   id_proveedor INT NOT NULL,
   nombre VARCHAR(100) NOT NULL,
   direccion VARCHAR(255) NOT NULL,
+  telefono VARCHAR(20),
+  email VARCHAR(100),
   PRIMARY KEY (id),
   FOREIGN KEY (id_proveedor) REFERENCES proveedor (id)
 );
