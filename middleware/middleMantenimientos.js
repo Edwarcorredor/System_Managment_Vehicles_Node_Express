@@ -5,9 +5,11 @@ import {Mantenimientos} from "../controller/Mantenimientos.js"
 
 const middleMantenimientos = (req, res, next) => {
     try{
+        if(req.method === 'GET'){
+            return next();
+        }
         let data = plainToClass(Mantenimientos, req.body);
         req.body = JSON.parse(JSON.stringify(data));
-        
         next();
     } catch(Error){
         res.send("Error");

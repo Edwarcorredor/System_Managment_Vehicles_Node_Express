@@ -5,9 +5,11 @@ import {Vehiculos} from "../controller/Vehiculos.js"
 
 const middleVehiculos = (req, res, next) => {
     try{
+        if(req.method === 'GET'){
+            return next();
+        }
         let data = plainToClass(Vehiculos, req.body);
         req.body = JSON.parse(JSON.stringify(data));
-        
         next();
     } catch(Error){
         res.send("Error");

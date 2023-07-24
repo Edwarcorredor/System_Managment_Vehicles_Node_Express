@@ -111,5 +111,44 @@ CREATE TABLE IF NOT EXISTS registro_mantenimiento(
 );
 
 
+-- Inserción de datos en la tabla EMPRESA
+INSERT INTO empresa (nombre, direccion, telefono, email, sitio_web)
+VALUES ('Empresa A', 'Calle 123, Ciudad', '123456789', 'empresaA@example.com', 'www.empresaA.com');
+
+-- Inserción de datos en la tabla MARCAS
+INSERT INTO marca (nombre, pais_origen, sitio_web)
+VALUES ('Marca X', 'País X', 'www.marcaX.com');
+
+-- Inserción de datos en la tabla MODELOS
+INSERT INTO modelo (id_marca, nombre, anio_lanzamiento)
+VALUES (1, 'Modelo 1', 2022);
+
+-- Inserción de datos en la tabla PROVEEDOR
+INSERT INTO proveedor (nombre, direccion, telefono, email, sitio_web)
+VALUES ('Proveedor A', 'Av. Principal, Ciudad', '987654321', 'proveedorA@example.com', 'www.proveedorA.com');
+
+-- Inserción de datos en la tabla SUCURSALES_PROVEEDOR
+INSERT INTO sucursal_proveedor (id_proveedor, nombre, direccion, telefono, email)
+VALUES (1, 'Sucursal 1', 'Av. Sucursal 123, Ciudad', '987654321', 'sucursal1@example.com');
+
+-- Inserción de datos en la tabla MANTENIMIENTO
+INSERT INTO mantenimiento (id_sucursal_proveedor, descripcion)
+VALUES (1, 'Mantenimiento Preventivo');
+
+-- Inserción de datos en la tabla VEHICULOS
+INSERT INTO vehiculo (id_empresa, id_modelo, numero_serie, placa, estado)
+VALUES (1, 1, '1234567890', 'ABC123', 'Activo');
+
+-- Inserción de datos en la tabla CLASES_ALARMAS
+INSERT INTO clase_alarma (nombre, descripcion, id_mantenimiento)
+VALUES ('Alarma Tipo A', 'Descripción de alarma Tipo A', 1);
+
+-- Inserción de datos en la tabla ALARMAS
+INSERT INTO alarma (id_vehiculo, id_clase_alarma, fecha)
+VALUES (1, 1, NOW());
+
+-- Inserción de datos en la tabla REGISTRO_MANTENIMIENTO
+INSERT INTO registro_mantenimiento (id_alarma, fecha, costo)
+VALUES (1, NOW(), 150.00);
 
 

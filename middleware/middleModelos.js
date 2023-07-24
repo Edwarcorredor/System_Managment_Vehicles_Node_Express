@@ -5,9 +5,11 @@ import {Modelos} from "../controller/Modelos.js"
 
 const middleModelos = (req, res, next) => {
     try{
+        if(req.method === 'GET'){
+            return next();
+        }
         let data = plainToClass(Modelos, req.body);
         req.body = JSON.parse(JSON.stringify(data));
-        
         next();
     } catch(Error){
         res.send("Error");
