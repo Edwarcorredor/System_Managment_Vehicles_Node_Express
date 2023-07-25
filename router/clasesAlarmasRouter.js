@@ -1,21 +1,15 @@
 import { Router } from 'express'
-import conexion_db from '../conexion_db/conexion_db.js';
+import { middleClasesAlarmas } from '../middleware/middleClasesAlarmas.js'
 
 const clasesAlarmasRouter = Router();
 
-clasesAlarmasRouter.get('/', conexion_db, (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla clase_alarma 
-        */
-        /*sql*/`SELECT * FROM clase_alarma`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+clasesAlarmasRouter.get('/', middleClasesAlarmas, (req, res) => {
+    res.send(req.body.guardar);
+
 })
 
 
-clasesAlarmasRouter.post('/', conexion_db, (req, res) => {
+clasesAlarmasRouter.post('/', (req, res) => {
     const { NAME, DESCRIPTION, MANTENIMIENTO_ID } = req.body;
     req.conexion.query(
         /*sql*/`INSERT INTO clase_alarma (nombre, descripcion, id_mantenimiento) VALUES (?, ?, ?)`,

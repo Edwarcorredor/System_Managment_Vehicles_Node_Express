@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import conexion_db from '../conexion_db/conexion_db.js';
+
 
 const mantenimientosRouter = Router();
 
-mantenimientosRouter.get('/', conexion_db, (req, res) => {
+mantenimientosRouter.get('/', (req, res) => {
     req.conexion.query(
         /**
         ** Funcion para obtener todos los valores de la tabla mantenimiento 
@@ -14,7 +14,7 @@ mantenimientosRouter.get('/', conexion_db, (req, res) => {
     })
 })
 
-mantenimientosRouter.post('/', conexion_db, (req, res) => {
+mantenimientosRouter.post('/', (req, res) => {
     const { SUCURSAL_ID, DESCRIPTION } = req.body;
     req.conexion.query(
         /*sql*/`INSERT INTO mantenimiento (id_sucursal_proveedor, descripcion) VALUES (?, ?)`,

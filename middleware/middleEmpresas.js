@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {Empresas} from "../controller/Empresas.js"
+import {plainToClass} from 'class-transformer';
+import {Empresas} from '../controller/Empresas.js'
+import {validate} from 'class-validator';
+const middleEmpresas = express();
 
-
-const middleEmpresas = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(Empresas, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleEmpresas.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(Empresas, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleEmpresas;
+export {middleEmpresas}

@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {ClasesAlarmas} from "../controller/ClasesAlarmas.js"
+import {plainToClass} from 'class-transformer';
+import {ClasesAlarmas} from '../controller/ClasesAlarmas.js'
+import {validate} from 'class-validator';
+const middleClasesAlarmas = express();
 
-
-const middleClasesAlarmas = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(ClasesAlarmas, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleClasesAlarmas.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(ClasesAlarmas, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleClasesAlarmas;
+export {middleClasesAlarmas}

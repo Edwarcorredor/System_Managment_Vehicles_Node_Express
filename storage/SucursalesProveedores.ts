@@ -1,4 +1,6 @@
 import { Type, Transform, Expose } from "class-transformer";
+import { IsDefined, IsNumber } from 'class-validator';
+import {conexion} from '../db/conexion_db.js'
 
 export class SurcursalesProveedores{
     /**

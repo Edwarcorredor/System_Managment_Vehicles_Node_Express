@@ -1,20 +1,13 @@
 import { Router } from 'express'
-import conexion_db from '../conexion_db/conexion_db.js';
+import { middleEmpresas } from '../middleware/middleEmpresas.js'
 
 const empresasRouter = Router();
 
-empresasRouter.get('/', conexion_db, (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla empresa 
-        */
-        /*sql*/`SELECT * FROM empresa`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+empresasRouter.get('/', middleEmpresas, (req, res) => {
+    res.send(req.body.guardar);
 })
 
-empresasRouter.post('/', conexion_db, (req, res) => {
+empresasRouter.post('/', (req, res) => {
     const { NAME, ADDRESS, PHONE, EMAIL, SITE_WEB } = req.body;
     req.conexion.query(
         /*sql*/`INSERT INTO empresa (nombre, direccion, telefono, email, sitio_web) VALUES (?, ?, ?, ?, ?)`,

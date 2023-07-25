@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import conexion_db from '../conexion_db/conexion_db.js';
+
 
 const marcasRouter = Router();
 
-marcasRouter.get('/', conexion_db, (req, res) => {
+marcasRouter.get('/', (req, res) => {
     req.conexion.query(
         /**
         ** Funcion para obtener todos los valores de la tabla marca 
@@ -14,7 +14,7 @@ marcasRouter.get('/', conexion_db, (req, res) => {
     })
 })
 
-marcasRouter.post('/', conexion_db, (req, res) => {
+marcasRouter.post('/', (req, res) => {
     const { NAME, ORIGEN_PAIS, WEB_SITE } = req.body;
     req.conexion.query(
         /*sql*/`INSERT INTO marca (nombre, pais_origen, sitio_web) VALUES (?, ?, ?)`,
