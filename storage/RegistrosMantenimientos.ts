@@ -10,30 +10,25 @@ export class RegistrosMantenimientos{
     */
 
     @Expose({name: "id_alarma"})
-    @Transform(({value}) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number"){ 
-            return Number(value);
-        } 
-        else{
-            throw {status:401, message:"Error en el id_alarma"};
-        }    
-    })
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_alarma no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_alarma es obligatorio"}}})
     ALARMA_ID: number
+
     @Expose({name: "costo"})
-    @Transform(({value}) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number"){ 
-            return Number(value);
-        } 
-        else{
-            throw {status:401, message:"Error en el costo"};
-        }    
-    })
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro costo no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro costo es obligatorio"}}})
     COST: number
 
     constructor(p1:number, p2:number){
         this.ALARMA_ID = p1;
         this.COST = p2;
+    }
+
+    get guardar(){
+        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+        (err, data, fields)=>{
+         console.log(data);
+        });
+        return "";
     }
 }

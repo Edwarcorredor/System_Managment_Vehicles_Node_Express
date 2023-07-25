@@ -1,17 +1,10 @@
 import { Router } from 'express'
-
+import { middleModelos } from '../middleware/middleModelos.js'
 
 const modelosRouter = Router();
 
-modelosRouter.get('/', (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla modelo 
-        */
-        /*sql*/`SELECT * FROM modelo`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+modelosRouter.get('/', middleModelos, (req, res) => {
+    res.send(req.body.guardar);
 })
 
 modelosRouter.post('/', (req, res) => {

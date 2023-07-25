@@ -1,17 +1,10 @@
 import { Router } from 'express'
-
+import { middleSucursalesProveedores } from '../middleware/middleSucursalesProveedores.js'
 
 const sucursalesProveedoresRouter = Router();
 
-sucursalesProveedoresRouter.get('/', (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla sucursal_proveedor 
-        */
-        /*sql*/`SELECT * FROM sucursal_proveedor`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+sucursalesProveedoresRouter.get('/', middleSucursalesProveedores, (req, res) => {
+    res.send(req.body.guardar);
 })
 
 export default sucursalesProveedoresRouter;

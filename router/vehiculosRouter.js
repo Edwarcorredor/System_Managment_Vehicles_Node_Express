@@ -1,17 +1,10 @@
 import { Router } from 'express'
-
+import { middleVehiculos } from '../middleware/middleVehiculos.js'
 
 const vehiculosRouter = Router();
 
-vehiculosRouter.get('/', (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla vehiculo 
-        */
-        /*sql*/`SELECT * FROM vehiculo`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+vehiculosRouter.get('/', middleVehiculos, (req, res) => {
+    res.send(req.body.guardar);
 })
 
 export default vehiculosRouter;

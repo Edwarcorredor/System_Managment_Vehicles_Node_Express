@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {Vehiculos} from "../controller/Vehiculos.js"
+import {plainToClass} from 'class-transformer';
+import {Vehiculos} from '../controller/Vehiculos.js'
+import {validate} from 'class-validator';
+const middleVehiculos = express();
 
-
-const middleVehiculos = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(Vehiculos, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleVehiculos.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(Vehiculos, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleVehiculos;
+export {middleVehiculos}

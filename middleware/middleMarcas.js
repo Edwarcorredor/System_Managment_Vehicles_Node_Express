@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {Marcas} from "../controller/Marcas.js"
+import {plainToClass} from 'class-transformer';
+import {Marcas} from '../controller/Marcas.js'
+import {validate} from 'class-validator';
+const middleMarcas = express();
 
-
-const middleMarcas = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(Marcas, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleMarcas.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(Marcas, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleMarcas;
+export {middleMarcas}

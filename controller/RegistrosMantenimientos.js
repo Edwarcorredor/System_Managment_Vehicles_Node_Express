@@ -7,36 +7,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Transform, Expose } from "class-transformer";
+import { Expose } from "class-transformer";
+import { IsDefined, IsNumber } from 'class-validator';
+import { conexion } from '../db/conexion_db.js';
 export class RegistrosMantenimientos {
     constructor(p1, p2) {
         this.ALARMA_ID = p1;
         this.COST = p2;
     }
+    get guardar() {
+        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+            console.log(data);
+        });
+        return "";
+    }
 }
 __decorate([
     Expose({ name: "id_alarma" }),
-    Transform(({ value }) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number") {
-            return Number(value);
-        }
-        else {
-            throw { status: 401, message: "Error en el id_alarma" };
-        }
-    }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_alarma no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_alarma es obligatorio" }; } }),
     __metadata("design:type", Number)
 ], RegistrosMantenimientos.prototype, "ALARMA_ID", void 0);
 __decorate([
     Expose({ name: "costo" }),
-    Transform(({ value }) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number") {
-            return Number(value);
-        }
-        else {
-            throw { status: 401, message: "Error en el costo" };
-        }
-    }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro costo no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro costo es obligatorio" }; } }),
     __metadata("design:type", Number)
 ], RegistrosMantenimientos.prototype, "COST", void 0);

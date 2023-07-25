@@ -1,17 +1,10 @@
 import { Router } from 'express'
-
+import { middleMantenimientos } from '../middleware/middleMantenimientos.js'
 
 const mantenimientosRouter = Router();
 
-mantenimientosRouter.get('/', (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla mantenimiento 
-        */
-        /*sql*/`SELECT * FROM mantenimiento`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+mantenimientosRouter.get('/', middleMantenimientos, (req, res) => {
+    res.send(req.body.guardar);
 })
 
 mantenimientosRouter.post('/', (req, res) => {

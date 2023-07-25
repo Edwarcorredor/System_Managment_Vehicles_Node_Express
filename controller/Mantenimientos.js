@@ -7,27 +7,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Transform, Expose } from "class-transformer";
+import { Expose } from "class-transformer";
+import { IsDefined, IsNumber, IsString } from 'class-validator';
+import { conexion } from '../db/conexion_db.js';
 export class Mantenimientos {
     constructor(p1, p2) {
         this.SUCURSAL_ID = p1;
         this.DESCRIPTION = p2;
     }
+    get guardar() {
+        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+            console.log(data);
+        });
+        return "";
+    }
 }
 __decorate([
     Expose({ name: "id_sucursal_proveedor" }),
-    Transform(({ value }) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number") {
-            return Number(value);
-        }
-        else {
-            throw { status: 401, message: "Error en el id_sucursal_proveedor" };
-        }
-    }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_sucursal_proveedor no es correcto" }; } }),
     __metadata("design:type", Number)
 ], Mantenimientos.prototype, "SUCURSAL_ID", void 0);
 __decorate([
     Expose({ name: "descripcion" }),
+    IsString({ message: () => "La descripcion debe ser una cadena de texto" }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_vehiculo es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Mantenimientos.prototype, "DESCRIPTION", void 0);

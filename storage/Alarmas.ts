@@ -23,10 +23,9 @@ export class Alarmas{
     }
 
     get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM alarma`, 
-        (err, data, fields)=>{
-         console.log(data)
-        });
-        return "";
+        return conexion.query(/*sql*/`SELECT * FROM alarma`, 
+        (err, data, fields)=> 
+        console.log(data)
+        )
     }
 }

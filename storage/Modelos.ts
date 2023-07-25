@@ -1,5 +1,5 @@
 import { Type, Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber } from 'class-validator';
+import { IsDefined, IsNumber, IsString } from 'class-validator';
 import {conexion} from '../db/conexion_db.js'
 
 export class Modelos{
@@ -10,33 +10,29 @@ export class Modelos{
     */
 
     @Expose({name: "id_marca"})
-    @Transform(({value}) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number"){ 
-            return Number(value);
-        } 
-        else{
-            throw {status:401, message:"Error en el id_marca"};
-        }    
-    })
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_marca no es correcto"}}})
     MARCA_ID: number
+
     @Expose({name: "nombre"})
+    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
     NAME: string
+
     @Expose({name: "anio_lanzamiento"})
-    @Transform(({value}) => {
-        let data = /^[0-9]+$/g.test(value);
-        if (data && typeof value == "number"){ 
-            return Number(value);
-        } 
-        else{
-            throw {status:401, message:"Error en el anio_lanzamiento"};
-        }    
-    })
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro anio_lanzamiento no es correcto"}}})
     LANZAMIENTO: number
 
     constructor(p1:number, p2:string, p3:number){
         this.MARCA_ID = p1;
         this.NAME = p2;
         this.LANZAMIENTO = p3;
+    }
+
+    get guardar(){
+        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+        (err, data, fields)=>{
+         console.log(data);
+        });
+        return "";
     }
 }

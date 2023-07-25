@@ -16,10 +16,7 @@ export class Alarmas {
         this.CLASE_ALARMA_ID = p2;
     }
     get guardar() {
-        conexion.query(/*sql*/ `SELECT * FROM alarma`, (err, data, fields) => {
-            console.log(data);
-        });
-        return "";
+        return conexion.query(/*sql*/ `SELECT * FROM alarma`, (err, data, fields) => console.log(data));
     }
 }
 __decorate([

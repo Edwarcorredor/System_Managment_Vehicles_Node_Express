@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {SurcursalesProveedores} from "../controller/SucursalesProveedores.js"
+import {plainToClass} from 'class-transformer';
+import {SucursalesProveedores} from '../controller/SucursalesProveedores.js'
+import {validate} from 'class-validator';
+const middleSucursalesProveedores = express();
 
-
-const middleSucursalesProveedores = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(SurcursalesProveedores, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleSucursalesProveedores.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(SucursalesProveedores, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleSucursalesProveedores
+export {middleSucursalesProveedores}

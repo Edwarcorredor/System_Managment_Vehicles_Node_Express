@@ -1,17 +1,10 @@
 import { Router } from 'express'
-
+import { middleMarcas } from '../middleware/middleMarcas.js'
 
 const marcasRouter = Router();
 
-marcasRouter.get('/', (req, res) => {
-    req.conexion.query(
-        /**
-        ** Funcion para obtener todos los valores de la tabla marca 
-        */
-        /*sql*/`SELECT * FROM marca`,
-        (error, data,fils) => {
-        res.send(data);
-    })
+marcasRouter.get('/', middleMarcas, (req, res) => {
+    res.send(req.body.guardar);
 })
 
 marcasRouter.post('/', (req, res) => {

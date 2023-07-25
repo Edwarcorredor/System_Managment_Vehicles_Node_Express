@@ -1,5 +1,5 @@
 import { Type, Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber } from 'class-validator';
+import { IsDefined, IsNumber, IsString} from 'class-validator';
 import {conexion} from '../db/conexion_db.js'
 
 export class ClasesAlarmas{
@@ -8,11 +8,13 @@ export class ClasesAlarmas{
     ** nombre, descripcion, id_mantenimiento
     */
    @Expose({name: "nombre"})
-   @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "nombre_alarma" ; else throw {status: 406, message: "El formato del parametro nombre  no es correcto"};}, { toClassOnly: true })
+   @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
+   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
    NAME: string
 
    @Expose({name: "descripcion"})
-   @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "descripcion_alarma" ; else throw {status: 406, message: "El formato del parametro descripcion  no es correcto"};}, { toClassOnly: true })
+   @IsString({message: ()=> "La descripcion debe ser una cadena de texto" })
+   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_vehiculo es obligatorio"}}})
    DESCRIPTION: string
 
    @Expose({name: "id_mantenimiento"})
@@ -28,7 +30,7 @@ export class ClasesAlarmas{
     get guardar(){
         conexion.query(/*sql*/`SELECT * FROM clase_alarma`, 
         (err, data, fields)=>{
-         console.log(data)
+         console.log(data);
         });
         return "";
     }

@@ -1,5 +1,5 @@
 import { Type, Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber } from 'class-validator';
+import { IsDefined, IsString, IsEmail, IsUrl } from 'class-validator';
 import {conexion} from '../db/conexion_db.js'
 
 export class Empresas{
@@ -10,18 +10,24 @@ export class Empresas{
     */
 
     @Expose({name: "nombre"})
-    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "nombre_empresa" ; else throw {status: 406, message: "El formato del parametro nombre  no es correcto"};}, { toClassOnly: true })
+    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
     NAME: string
 
     @Expose({name: "direccion"})
-    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "nombre_alarma" ; else throw {status: 406, message: "El formato del parametro nombre  no es correcto"};}, { toClassOnly: true })
+    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_empresa" ; else throw {status: 406, message: "El formato del parametro direccion  no es correcto"};}, { toClassOnly: true })
     ADDRESS: string
 
     @Expose({name: "telefono"})
+    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro telefono  no cumple con el formato solicitado"};}, { toClassOnly: true })
     PHONE: string
+
     @Expose({name: "email"})
+    @IsEmail({}, { message: "El correo electrónico no es válido" })
     EMAIL: string
+
     @Expose({name: "sitio_web"})
+    @IsUrl({}, { message: "La URL no es válida" })
     SITE_WEB: string
 
     constructor(p1:string, p2:string, p3:string, p4:string, p5:string){
@@ -35,7 +41,7 @@ export class Empresas{
     get guardar(){
         conexion.query(/*sql*/`SELECT * FROM empresa`, 
         (err, data, fields)=>{
-         console.log(data)
+         console.log(data);
         });
         return "";
     }

@@ -1,19 +1,19 @@
+import express from 'express';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
-import {Modelos} from "../controller/Modelos.js"
+import {plainToClass} from 'class-transformer';
+import {Modelos} from '../controller/Modelos.js'
+import {validate} from 'class-validator';
+const middleModelos = express();
 
-
-const middleModelos = (req, res, next) => {
-    try{
-        if(req.method === 'GET'){
-            return next();
-        }
-        let data = plainToClass(Modelos, req.body);
-        req.body = JSON.parse(JSON.stringify(data));
+middleModelos.use(async(req,res,next)=>{
+    try {
+        let data = plainToClass(Modelos, req.body, { excludeExtraneousValues: true });
+        await validate(data);
+        req.body = data;
         next();
-    } catch(Error){
-        res.send("Error");
-    }  
-}
+    } catch (err) {
+        res.status(err.status).json(err)
+    }
+})
 
-export default middleModelos;
+export {middleModelos}

@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Transform, Expose } from "class-transformer";
+import { IsDefined, IsString, IsEmail, IsUrl } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Empresas {
     constructor(p1, p2, p3, p4, p5) {
@@ -26,29 +27,33 @@ export class Empresas {
 }
 __decorate([
     Expose({ name: "nombre" }),
-    Transform(({ value }) => { if (/^[a-z A-Z 0-9]+$/.test(value))
-        return (value) ? value : "nombre_empresa";
-    else
-        throw { status: 406, message: "El formato del parametro nombre  no es correcto" }; }, { toClassOnly: true }),
+    IsString({ message: () => "El nombre debe ser una cadena de texto" }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro nombre es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Empresas.prototype, "NAME", void 0);
 __decorate([
     Expose({ name: "direccion" }),
     Transform(({ value }) => { if (/^[a-z A-Z 0-9]+$/.test(value))
-        return (value) ? value : "nombre_alarma";
+        return (value) ? value : "direccion_empresa";
     else
-        throw { status: 406, message: "El formato del parametro nombre  no es correcto" }; }, { toClassOnly: true }),
+        throw { status: 406, message: "El formato del parametro direccion  no es correcto" }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], Empresas.prototype, "ADDRESS", void 0);
 __decorate([
     Expose({ name: "telefono" }),
+    Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
+        return value;
+    else
+        throw { status: 400, message: "El parametro telefono  no cumple con el formato solicitado" }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], Empresas.prototype, "PHONE", void 0);
 __decorate([
     Expose({ name: "email" }),
+    IsEmail({}, { message: "El correo electrónico no es válido" }),
     __metadata("design:type", String)
 ], Empresas.prototype, "EMAIL", void 0);
 __decorate([
     Expose({ name: "sitio_web" }),
+    IsUrl({}, { message: "La URL no es válida" }),
     __metadata("design:type", String)
 ], Empresas.prototype, "SITE_WEB", void 0);
