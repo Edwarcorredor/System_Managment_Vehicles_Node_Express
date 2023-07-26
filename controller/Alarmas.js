@@ -45,7 +45,7 @@ __decorate([
     Expose({ name: "VEHICULO_ID", }),
     Transform(({ value }) => {
         let data = /^([1-9]\d*)$/g.test(value);
-        if (data) {
+        if (data && typeof value == "number") {
             return Number(value);
         }
         else {
@@ -59,7 +59,7 @@ __decorate([
     Expose({ name: "CLASE_ALARMA_ID" }),
     Transform(({ value }) => {
         let data = /^([1-9]\d*)$/g.test(value);
-        if (data) {
+        if (data && typeof value == "number") {
             return Number(value);
         }
         else {

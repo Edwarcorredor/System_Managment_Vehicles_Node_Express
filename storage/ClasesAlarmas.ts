@@ -9,7 +9,7 @@ export class ClasesAlarmas{
   */
   @Expose({name: "NAME"})
   @Transform(({value}) => {
-    let data = /^[a-zA-Z]+/g.test(value);
+    let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
     if ( data && typeof value == "string"){ 
         return String(value);
     } 
@@ -22,7 +22,7 @@ export class ClasesAlarmas{
 
   @Expose({name: "DESCRIPTION"})
   @Transform(({value}) => {
-    let data = /^[a-zA-Z]+/g.test(value);
+    let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
     if ( data && typeof value == "string"){ 
         return String(value);
     } 
@@ -35,7 +35,7 @@ export class ClasesAlarmas{
 
   @Expose({name: "MANTENIMIENTO_ID"})
   @Transform(({value}) => {
-  let data = /^[0-9]\d+$/g.test(value);
+  let data = /^([1-9]\d*)$/g.test(value);
   if (data && typeof value == "number"){ 
       return Number(value);
   } 
@@ -46,7 +46,7 @@ export class ClasesAlarmas{
   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MANTENIMIENTO_ID es obligatorio"}}})
   id_mantenimiento: number
 
-  constructor(p1:string ="Nombre ", p2:string ="Descripcion ", p3:number = 1){
+  constructor(p1:string ="Nombres", p2:string ="Descripcion", p3:number = 1){
   this.nombre = p1;
   this.descripcion = p2;
   this.id_mantenimiento = p3;

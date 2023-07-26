@@ -20,7 +20,7 @@ import { Transform, Expose } from "class-transformer";
 import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class ClasesAlarmas {
-    constructor(p1 = "Nombre ", p2 = "Descripcion ", p3 = 1) {
+    constructor(p1 = "Nombres", p2 = "Descripcion", p3 = 1) {
         this.nombre = p1;
         this.descripcion = p2;
         this.id_mantenimiento = p3;
@@ -45,7 +45,7 @@ export class ClasesAlarmas {
 __decorate([
     Expose({ name: "NAME" }),
     Transform(({ value }) => {
-        let data = /^[a-zA-Z]+/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
         if (data && typeof value == "string") {
             return String(value);
         }
@@ -59,7 +59,7 @@ __decorate([
 __decorate([
     Expose({ name: "DESCRIPTION" }),
     Transform(({ value }) => {
-        let data = /^[a-zA-Z]+/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
         if (data && typeof value == "string") {
             return String(value);
         }
@@ -73,7 +73,7 @@ __decorate([
 __decorate([
     Expose({ name: "MANTENIMIENTO_ID" }),
     Transform(({ value }) => {
-        let data = /^[0-9]\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number") {
             return Number(value);
         }
