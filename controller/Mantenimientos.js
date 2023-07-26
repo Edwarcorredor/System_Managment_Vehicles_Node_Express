@@ -40,6 +40,13 @@ export class Mantenimientos {
             return rows;
         }))();
     }
+    actualizar(id, body) {
+        conexion.query(/*sql*/ `UPDATE mantenimiento SET ? WHERE id = ?`, [body, id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "SUCURSAL_ID" }),

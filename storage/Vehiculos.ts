@@ -101,4 +101,14 @@ export class Vehiculos{
           return rows;
         })();
     }
+
+    actualizar(id:number, body:object){
+        conexion.query(/*sql*/`UPDATE vehiculo SET ? WHERE id = ?`,
+        [body, id],
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        }); 
+    }
 }

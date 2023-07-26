@@ -40,6 +40,13 @@ export class RegistrosMantenimientos {
             return rows;
         }))();
     }
+    actualizar(id, body) {
+        conexion.query(/*sql*/ `UPDATE registro_mantenimiento SET ? WHERE id = ?`, [body, id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "ALARMA_ID" }),

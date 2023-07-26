@@ -98,4 +98,14 @@ export class Proveedores{
           return rows;
         })();
     }
+
+    actualizar(id:number, body:object){
+        conexion.query(/*sql*/`UPDATE proveedor SET ? WHERE id = ?`,
+        [body, id],
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        }); 
+    }
 }

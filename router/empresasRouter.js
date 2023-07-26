@@ -12,4 +12,8 @@ empresasRouter.post('/', middleEmpresas, (req,res)=>{
   res.json({status: 201, message: "Datos guardados"});
 });
 
+empresasRouter.put('/:id', middleEmpresas, (req,res)=>{
+  req.body.actualizar(req.params.id, JSON.parse(req.data));
+  res.json({status: 202, message: "Datos actualizados"});
+});
 export default empresasRouter;

@@ -31,6 +31,13 @@ export class Alarmas {
             console.log(fields);
         });
     }
+    actualizar(id, body) {
+        conexion.query(/*sql*/ `UPDATE alarma SET ? WHERE id = ?`, [body, id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
     get allTabla() {
         const cox = conexion.promise();
         return (() => __awaiter(this, void 0, void 0, function* () {

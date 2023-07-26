@@ -98,4 +98,14 @@ export class SucursalesProveedores{
           return rows;
         })();
     }
+
+    actualizar(id:number, body:object){
+        conexion.query(/*sql*/`UPDATE sucursal_proveedor SET ? WHERE id = ?`,
+        [body, id],
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        }); 
+    }
 }

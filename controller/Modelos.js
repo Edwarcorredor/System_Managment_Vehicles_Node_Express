@@ -41,6 +41,13 @@ export class Modelos {
             return rows;
         }))();
     }
+    actualizar(id, body) {
+        conexion.query(/*sql*/ `UPDATE modelo SET ? WHERE id = ?`, [body, id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "MARCA_ID" }),
