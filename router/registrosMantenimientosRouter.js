@@ -7,7 +7,7 @@ registrosMantenimientosRouter.get('/', middleRegistrosMantenimientos, async(req,
     res.send(await req.body.allTabla);
 })
 
-registrosMantenimientosRouter.post('/', (req,res)=>{
+registrosMantenimientosRouter.post('/', middleRegistrosMantenimientos, (req,res)=>{
     req.body.guardar = JSON.parse(req.data);
     res.json({status: 201, message: "Datos guardados"});
   });

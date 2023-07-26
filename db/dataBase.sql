@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS registro_mantenimiento(
   id INT NOT NULL AUTO_INCREMENT,
   id_alarma INT NOT NULL,
   fecha TIMESTAMP,
-  costo DECIMAL(10, 2) NOT NULL,
+  costo DECIMAL(12, 2) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_alarma) REFERENCES alarma (id)
 );

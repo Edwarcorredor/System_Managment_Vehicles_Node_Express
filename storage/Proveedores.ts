@@ -66,7 +66,7 @@ export class Proveedores{
             return String(value);
         } 
         else{
-            throw {status:401, message:"Error en el EMAIL"};
+            throw {status:401, message:"Error en el WEB_SITE"};
         }    
     })
     sitio_web: string

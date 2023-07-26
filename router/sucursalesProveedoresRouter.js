@@ -7,7 +7,7 @@ sucursalesProveedoresRouter.get('/', middleSucursalesProveedores, async(req,res)
     res.send(await req.body.allTabla);
 })
 
-sucursalesProveedoresRouter.post('/', (req,res)=>{
+sucursalesProveedoresRouter.post('/', middleSucursalesProveedores, (req,res)=>{
     req.body.guardar = JSON.parse(req.data);
     res.json({status: 201, message: "Datos guardados"});
 });

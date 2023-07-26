@@ -10,7 +10,7 @@ export class SucursalesProveedores{
 
     @Expose({name: "PROVEEDOR_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
@@ -22,24 +22,56 @@ export class SucursalesProveedores{
     id_proveedor: number
 
     @Expose({name: "NAME"})
-    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el NAME"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
     nombre: string
 
     @Expose({name: "ADDRESS"})
-    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_sucursal" ; else throw {status: 406, message: "El formato del parametro ADDRESS  no es correcto"};}, { toClassOnly: true })
+    @Transform(({value}) => {
+        let data = /^[a-zA-Z0-9\s.,#-]+$/i.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el ADDRESS"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro ADDRESS es obligatorio"}}})
     direccion: string
 
     @Expose({name: "PHONE"})
-    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro PHONE  no cumple con el formato solicitado"};}, { toClassOnly: true })
+    @Transform(({value}) => {
+        let data = /^(?:[1-9]\d*|undefined)$/g.test(value);
+        if (data){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el PHONE"};
+        }    
+    })
     telefono: string
 
     @Expose({name: "EMAIL"})
-    @IsEmail({}, { message: "El correo electrónico no es válido" })
+    @Transform(({value}) => {
+        let data = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|undefined+$/g.test(value);
+        if (data){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el EMAIL"};
+        }    
+    })
     email: string
 
-    constructor(p1:number, p2:string, p3:string, p4:string, p5:string){
+    constructor(p1:number = 1, p2:string ="nombre", p3:string ="direccion", p4:string, p5:string){
         this.id_proveedor = p1;
         this.nombre = p2;
         this.direccion = p3;

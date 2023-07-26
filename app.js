@@ -23,7 +23,7 @@ app.use('/empresas', validateJWT, empresasRouter);
 app.use('/marcas', validateJWT, marcasRouter);                       
 app.use('/modelos', validateJWT, modelosRouter);
 app.use('/proveedores', validateJWT, proveedoreesRouter);
-app.use('/surcursales_proveedores', validateJWT, sucursalesProveedoresRouter);
+app.use('/sucursales_proveedores', validateJWT, sucursalesProveedoresRouter);
 app.use('/mantenimientos', validateJWT, mantenimientosRouter);
 app.use('/vehiculos', validateJWT, vehiculosRouter);
 app.use('/clases_alarmas', validateJWT, clasesAlarmasRouter);

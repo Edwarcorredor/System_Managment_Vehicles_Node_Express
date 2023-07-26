@@ -11,7 +11,7 @@ export class RegistrosMantenimientos{
 
     @Expose({name: "ALARMA_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
@@ -23,7 +23,15 @@ export class RegistrosMantenimientos{
     id_alarma: number
 
     @Expose({name: "COST"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro COST no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^[+]?\d*\.?\d+$/g.test(value);
+        if (data){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el COST"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro COST es obligatorio"}}})
     costo: number
 
