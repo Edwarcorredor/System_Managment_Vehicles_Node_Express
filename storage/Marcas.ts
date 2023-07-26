@@ -11,7 +11,7 @@ export class Marcas{
 
     @Expose({name: "NAME"})
     @Transform(({value}) => {
-        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
         if ( data && typeof value == "string"){ 
             return String(value);
         } 
@@ -24,7 +24,7 @@ export class Marcas{
 
     @Expose({name: "ORIGEN_PAIS"})
     @Transform(({value}) => {
-        let data = /^[a-zA-Z]*$|^undefined$/g.test(value);
+        let data = /^[a-zA-Z ]*$|^undefined$/g.test(value);
         if ( data){ 
             return String(value);
         } 

@@ -17,10 +17,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber, IsString } from 'class-validator';
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Modelos {
-    constructor(p1 = 1, p2 = "", p3) {
+    constructor(p1 = 1, p2 = "hola", p3) {
         this.id_marca = p1;
         this.nombre = p2;
         this.anio_lanzamiento = p3;
@@ -45,7 +45,7 @@ export class Modelos {
 __decorate([
     Expose({ name: "MARCA_ID" }),
     Transform(({ value }) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number") {
             return Number(value);
         }
@@ -58,12 +58,28 @@ __decorate([
 ], Modelos.prototype, "id_marca", void 0);
 __decorate([
     Expose({ name: "NAME" }),
-    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el NAME" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Modelos.prototype, "nombre", void 0);
 __decorate([
     Expose({ name: "LANZAMIENTO_ANIO" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro LANZAMIENTO_ANIO no es correcto" }; } }),
+    Transform(({ value }) => {
+        let data = /^(?:[1-9]\d*|undefined)$/g.test(value);
+        if (data) {
+            return value;
+        }
+        else {
+            throw { status: 401, message: "Error en el LANZAMIENTO_ANIO" };
+        }
+    }),
     __metadata("design:type", Number)
 ], Modelos.prototype, "anio_lanzamiento", void 0);

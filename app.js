@@ -22,7 +22,7 @@ app.use("/token", appJWT);
 app.use('/empresas', validateJWT, empresasRouter);
 app.use('/marcas', validateJWT, marcasRouter);                       
 app.use('/modelos', validateJWT, modelosRouter);
-app.use('/proveedorees', validateJWT, proveedoreesRouter);
+app.use('/proveedores', validateJWT, proveedoreesRouter);
 app.use('/surcursales_proveedores', validateJWT, sucursalesProveedoresRouter);
 app.use('/mantenimientos', validateJWT, mantenimientosRouter);
 app.use('/vehiculos', validateJWT, vehiculosRouter);

@@ -11,7 +11,7 @@ export class Modelos{
 
     @Expose({name: "MARCA_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
@@ -23,15 +23,31 @@ export class Modelos{
     id_marca: number
 
     @Expose({name: "NAME"})
-    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el NAME"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
     nombre: string
 
     @Expose({name: "LANZAMIENTO_ANIO"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro LANZAMIENTO_ANIO no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^(?:[1-9]\d*|undefined)$/g.test(value);
+        if (data){ 
+            return value;
+        } 
+        else{
+            throw {status:401, message:"Error en el LANZAMIENTO_ANIO"};
+        }    
+    })
     anio_lanzamiento: number
 
-    constructor(p1:number = 1, p2:string = "", p3:number){
+    constructor(p1:number = 1, p2:string = "hola", p3:number){
         this.id_marca = p1;
         this.nombre = p2;
         this.anio_lanzamiento = p3;

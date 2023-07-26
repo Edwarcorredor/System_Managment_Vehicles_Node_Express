@@ -45,7 +45,7 @@ export class ClasesAlarmas {
 __decorate([
     Expose({ name: "NAME" }),
     Transform(({ value }) => {
-        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
         if (data && typeof value == "string") {
             return String(value);
         }
@@ -59,7 +59,7 @@ __decorate([
 __decorate([
     Expose({ name: "DESCRIPTION" }),
     Transform(({ value }) => {
-        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
         if (data && typeof value == "string") {
             return String(value);
         }

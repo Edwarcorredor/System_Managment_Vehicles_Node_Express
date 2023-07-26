@@ -11,7 +11,7 @@ export class Empresas{
 
     @Expose({name: "NAME"})
     @Transform(({value}) => {
-        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$/g.test(value);
         if ( data && typeof value == "string"){ 
             return String(value);
         } 
@@ -37,7 +37,7 @@ export class Empresas{
 
     @Expose({name: "PHONE"})
     @Transform(({value}) => {
-        let data = /^[0-9]\d|undefined+$/g.test(value);
+        let data = /^(?:[1-9]\d*|undefined)$/g.test(value);
         if (data){ 
             return String(value);
         } 

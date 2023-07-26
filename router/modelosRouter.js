@@ -7,7 +7,7 @@ modelosRouter.get('/', middleModelos, async(req,res)=>{
   res.send(await req.body.allTabla);
 })
 
-modelosRouter.post('/', (req,res)=>{
+modelosRouter.post('/', middleModelos, (req,res)=>{
   req.body.guardar = JSON.parse(req.data);
   res.json({status: 201, message: "Datos guardados"});
 });
