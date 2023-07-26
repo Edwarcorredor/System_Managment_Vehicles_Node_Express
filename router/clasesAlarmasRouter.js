@@ -8,7 +8,7 @@ clasesAlarmasRouter.get('/', middleClasesAlarmas, async(req,res)=>{
 })
 
 
-clasesAlarmasRouter.post('/', (req,res)=>{
+clasesAlarmasRouter.post('/',middleClasesAlarmas, (req,res)=>{
   req.body.guardar = JSON.parse(req.data);
   res.json({status: 201, message: "Datos guardados"});
 });

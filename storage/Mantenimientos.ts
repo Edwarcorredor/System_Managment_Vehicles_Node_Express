@@ -10,7 +10,15 @@ export class Mantenimientos{
     */
 
     @Expose({ name: "SUCURSAL_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro SUCURSAL_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el SUCURSAL_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro SUCURSAL_ID es obligatorio"}}})
     id_sucursal_proveedor: number
 

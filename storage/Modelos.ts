@@ -10,7 +10,15 @@ export class Modelos{
     */
 
     @Expose({name: "MARCA_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro MARCA_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el MARCA_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MARCA_ID es obligatorio"}}})
     id_marca: number
 

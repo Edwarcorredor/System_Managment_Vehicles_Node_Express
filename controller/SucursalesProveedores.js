@@ -17,7 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber, IsString, IsEmail } from 'class-validator';
+import { IsDefined, IsString, IsEmail } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class SucursalesProveedores {
     constructor(p1, p2, p3, p4, p5) {
@@ -46,7 +46,15 @@ export class SucursalesProveedores {
 }
 __decorate([
     Expose({ name: "PROVEEDOR_ID" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro PROVEEDOR_ID no es correcto" }; } }),
+    Transform(({ value }) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number") {
+            return Number(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el PROVEEDOR_ID" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro PROVEEDOR_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
 ], SucursalesProveedores.prototype, "id_proveedor", void 0);

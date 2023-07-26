@@ -16,7 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Expose } from "class-transformer";
+import { Transform, Expose } from "class-transformer";
 import { IsDefined, IsNumber } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class RegistrosMantenimientos {
@@ -43,7 +43,15 @@ export class RegistrosMantenimientos {
 }
 __decorate([
     Expose({ name: "ALARMA_ID" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro ALARMA_ID no es correcto" }; } }),
+    Transform(({ value }) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number") {
+            return Number(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el ALARMA_ID" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro ALARMA_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
 ], RegistrosMantenimientos.prototype, "id_alarma", void 0);

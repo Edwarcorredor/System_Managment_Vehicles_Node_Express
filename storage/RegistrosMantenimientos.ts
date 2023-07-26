@@ -10,7 +10,15 @@ export class RegistrosMantenimientos{
     */
 
     @Expose({name: "ALARMA_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro ALARMA_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el ALARMA_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro ALARMA_ID es obligatorio"}}})
     id_alarma: number
 

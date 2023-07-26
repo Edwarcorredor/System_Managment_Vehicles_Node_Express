@@ -17,10 +17,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Transform, Expose } from "class-transformer";
-import { IsDefined, IsString, IsEmail, IsUrl } from 'class-validator';
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Empresas {
-    constructor(p1 = "", p2 = "calle1", p3, p4, p5) {
+    constructor(p1 = "hola", p2 = "calle #12", p3 = "1234", p4 = "user@example.com", p5 = "https://www.example.com") {
         this.nombre = p1;
         this.direccion = p2;
         this.telefono = p3;
@@ -46,34 +46,68 @@ export class Empresas {
 }
 __decorate([
     Expose({ name: "NAME" }),
-    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z]+/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el NAME" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Empresas.prototype, "nombre", void 0);
 __decorate([
     Expose({ name: "ADDRESS" }),
-    Transform(({ value }) => { if (/^[a-z A-Z 0-9]+$/.test(value))
-        return (value) ? value : "direccion_empresa";
-    else
-        throw { status: 406, message: "El formato del parametro ADDRESS  no es correcto" }; }, { toClassOnly: true }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z0-9\s.,#-]+$/i.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el ADDRESS" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro ADDRESS es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Empresas.prototype, "direccion", void 0);
 __decorate([
     Expose({ name: "PHONE" }),
-    Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
-        return value;
-    else
-        throw { status: 400, message: "El parametro PHONE  no cumple con el formato solicitado" }; }, { toClassOnly: true }),
+    Transform(({ value }) => {
+        let data = /^[0-9]\d|undefined+$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el PHONE" };
+        }
+    }),
     __metadata("design:type", String)
 ], Empresas.prototype, "telefono", void 0);
 __decorate([
     Expose({ name: "EMAIL" }),
-    IsEmail({}, { message: "El correo electrónico no es válido" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|undefined+$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el EMAIL" };
+        }
+    }),
     __metadata("design:type", String)
 ], Empresas.prototype, "email", void 0);
 __decorate([
     Expose({ name: "SITE_WEB" }),
-    IsUrl({}, { message: "La URL no es válida" }),
+    Transform(({ value }) => {
+        let data = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9._%+-]*)*|undefined+$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el EMAIL" };
+        }
+    }),
     __metadata("design:type", String)
 ], Empresas.prototype, "sitio_web", void 0);

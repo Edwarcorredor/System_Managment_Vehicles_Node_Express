@@ -9,7 +9,7 @@ export class Alarmas{
     */
     @Expose({name: "VEHICULO_ID",})
     @Transform(({value}) => {
-      let data = /^\d+$/g.test(value);
+      let data = /^[0-9]\d+$/g.test(value);
       if (data && typeof value == "number"){ 
           return Number(value);
       } 
@@ -22,7 +22,7 @@ export class Alarmas{
 
     @Expose({name: "CLASE_ALARMA_ID"})
     @Transform(({value}) => {
-      let data = /^\d+$/g.test(value);
+      let data = /^[0-9]\d+$/g.test(value);
       if (data && typeof value == "number"){ 
           return Number(value);
       } 

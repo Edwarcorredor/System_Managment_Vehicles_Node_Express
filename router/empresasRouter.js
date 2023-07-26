@@ -7,7 +7,7 @@ empresasRouter.get('/', middleEmpresas, async(req,res)=>{
   res.send(await req.body.allTabla);
 })
 
-empresasRouter.post('/', (req,res)=>{
+empresasRouter.post('/', middleEmpresas, (req,res)=>{
   req.body.guardar = JSON.parse(req.data);
   res.json({status: 201, message: "Datos guardados"});
 });

@@ -10,12 +10,28 @@ export class Vehiculos{
     */
 
     @Expose({name: "EMPRESA_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro EMPRESA_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el EMPRESA_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro EMPRESA_ID es obligatorio"}}})
     id_empresa: number
 
     @Expose({name: "MODELO_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro MODELO_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el EMPRESA_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MODELO_ID es obligatorio"}}})
     id_modelo: number
 

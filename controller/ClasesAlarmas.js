@@ -16,11 +16,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Expose } from "class-transformer";
-import { IsDefined, IsNumber, IsString } from 'class-validator';
+import { Transform, Expose } from "class-transformer";
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class ClasesAlarmas {
-    constructor(p1 = "", p2 = "", p3 = 1) {
+    constructor(p1 = "hola", p2 = "hola", p3 = 1) {
         this.nombre = p1;
         this.descripcion = p2;
         this.id_mantenimiento = p3;
@@ -36,26 +36,51 @@ export class ClasesAlarmas {
         const cox = conexion.promise();
         return (() => __awaiter(this, void 0, void 0, function* () {
             const [rows, fields] = yield cox.execute(/*sql*/ `
-          SELECT * FROM clase_alarma
-          `);
+        SELECT * FROM clase_alarma
+        `);
             return rows;
         }))();
     }
 }
 __decorate([
     Expose({ name: "NAME" }),
-    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z]+/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el NAME" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
 ], ClasesAlarmas.prototype, "nombre", void 0);
 __decorate([
     Expose({ name: "DESCRIPTION" }),
-    IsString({ message: () => "La DESCRIPTION debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z]+/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el DESCRIPTION" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro DESCRIPTION es obligatorio" }; } }),
     __metadata("design:type", String)
 ], ClasesAlarmas.prototype, "descripcion", void 0);
 __decorate([
     Expose({ name: "MANTENIMIENTO_ID" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro MANTENIMIENTO_ID no es correcto" }; } }),
+    Transform(({ value }) => {
+        let data = /^[0-9]\d+$/g.test(value);
+        if (data && typeof value == "number") {
+            return Number(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el MANTENIMIENTO_ID" };
+        }
+    }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro MANTENIMIENTO_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
 ], ClasesAlarmas.prototype, "id_mantenimiento", void 0);

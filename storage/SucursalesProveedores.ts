@@ -9,7 +9,15 @@ export class SucursalesProveedores{
     */
 
     @Expose({name: "PROVEEDOR_ID"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro PROVEEDOR_ID no es correcto"}}})
+    @Transform(({value}) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number"){ 
+            return Number(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el PROVEEDOR_ID"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro PROVEEDOR_ID es obligatorio"}}})
     id_proveedor: number
 
