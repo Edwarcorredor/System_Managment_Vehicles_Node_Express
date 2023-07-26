@@ -10,19 +10,43 @@ export class Marcas{
     */
 
     @Expose({name: "NAME"})
-    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el NAME"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
     nombre: string
 
     @Expose({name: "ORIGEN_PAIS"})
-    @IsString({message: ()=> "El ORIGEN_PAIS debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^[a-zA-Z]*$|^undefined$/g.test(value);
+        if ( data){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el ORIGEN_PAIS"};
+        }    
+    })
     pais_origen: string
 
     @Expose({name: "WEB_SITE"})
-    @IsUrl({}, { message: "La URL no es válida" })
+    @Transform(({value}) => {
+        let data = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9._%+-]*)*|undefined+$/g.test(value);
+        if (data){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el WEB_SITE"};
+        }    
+    })
     sitio_web: string
 
-    constructor(p1:string ="", p2:string, p3:string){
+    constructor(p1:string ="Hola", p2:string, p3:string){
         this.nombre = p1;
         this.pais_origen = p2;
         this.sitio_web = p3;

@@ -20,7 +20,7 @@ import { Transform, Expose } from "class-transformer";
 import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Empresas {
-    constructor(p1 = "hola", p2 = "calle #12", p3 = "1234", p4 = "user@example.com", p5 = "https://www.example.com") {
+    constructor(p1 = "hola", p2 = "calle #12", p3, p4, p5) {
         this.nombre = p1;
         this.direccion = p2;
         this.telefono = p3;
@@ -47,7 +47,7 @@ export class Empresas {
 __decorate([
     Expose({ name: "NAME" }),
     Transform(({ value }) => {
-        let data = /^[a-zA-Z]+/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
         if (data && typeof value == "string") {
             return String(value);
         }

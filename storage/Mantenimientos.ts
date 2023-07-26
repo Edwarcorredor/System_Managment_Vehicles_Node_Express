@@ -11,7 +11,7 @@ export class Mantenimientos{
 
     @Expose({ name: "SUCURSAL_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
@@ -23,11 +23,19 @@ export class Mantenimientos{
     id_sucursal_proveedor: number
 
     @Expose({ name: "DESCRIPTION"})
-    @IsString({message: ()=> "La DESCRIPTION debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el DESCRIPTION"};
+        }    
+      })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro DESCRIPTION es obligatorio"}}})
     descripcion: string
 
-    constructor(p1:number = 1, p2:string = ""){
+    constructor(p1:number = 1, p2:string = "hola"){
         this.id_sucursal_proveedor = p1;
         this.descripcion = p2;
     }

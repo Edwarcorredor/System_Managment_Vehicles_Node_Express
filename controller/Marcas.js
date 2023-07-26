@@ -16,11 +16,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Expose } from "class-transformer";
-import { IsDefined, IsString, IsUrl } from 'class-validator';
+import { Transform, Expose } from "class-transformer";
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Marcas {
-    constructor(p1 = "", p2, p3) {
+    constructor(p1 = "Hola", p2, p3) {
         this.nombre = p1;
         this.pais_origen = p2;
         this.sitio_web = p3;
@@ -44,17 +44,41 @@ export class Marcas {
 }
 __decorate([
     Expose({ name: "NAME" }),
-    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el NAME" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Marcas.prototype, "nombre", void 0);
 __decorate([
     Expose({ name: "ORIGEN_PAIS" }),
-    IsString({ message: () => "El ORIGEN_PAIS debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z]*$|^undefined$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el ORIGEN_PAIS" };
+        }
+    }),
     __metadata("design:type", String)
 ], Marcas.prototype, "pais_origen", void 0);
 __decorate([
     Expose({ name: "WEB_SITE" }),
-    IsUrl({}, { message: "La URL no es válida" }),
+    Transform(({ value }) => {
+        let data = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9._%+-]*)*|undefined+$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el WEB_SITE" };
+        }
+    }),
     __metadata("design:type", String)
 ], Marcas.prototype, "sitio_web", void 0);

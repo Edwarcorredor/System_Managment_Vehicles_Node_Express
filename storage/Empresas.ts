@@ -11,7 +11,7 @@ export class Empresas{
 
     @Expose({name: "NAME"})
     @Transform(({value}) => {
-        let data = /^[a-zA-Z]+/g.test(value);
+        let data = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/g.test(value);
         if ( data && typeof value == "string"){ 
             return String(value);
         } 
@@ -71,7 +71,7 @@ export class Empresas{
     })
     sitio_web: string
 
-    constructor(p1:string ="hola", p2:string ="calle #12", p3:string="1234", p4:string = "user@example.com", p5:string ="https://www.example.com"){
+    constructor(p1:string ="hola", p2:string ="calle #12", p3:string, p4:string, p5:string){
         this.nombre = p1;
         this.direccion = p2;
         this.telefono = p3;
