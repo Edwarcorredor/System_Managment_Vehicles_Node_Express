@@ -20,7 +20,7 @@ import { Transform, Expose } from "class-transformer";
 import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class ClasesAlarmas {
-    constructor(p1 = "hola", p2 = "hola", p3 = 1) {
+    constructor(p1 = "Nombre ", p2 = "Descripcion ", p3 = 1) {
         this.nombre = p1;
         this.descripcion = p2;
         this.id_mantenimiento = p3;

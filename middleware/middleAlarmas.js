@@ -8,11 +8,12 @@ const middleAlarmas = express();
 middleAlarmas.use(async(req,res,next)=>{
 
     try {
+        let data;
         if(req.method=="GET"){
-            var data = plainToClass(Alarmas, req.data.interfaceData, { excludeExtraneousValues: true });
+            data = plainToClass(Alarmas, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{
-            var data = plainToClass(Alarmas, req.body, { excludeExtraneousValues: true });
+            data = plainToClass(Alarmas, req.body, { excludeExtraneousValues: true });
         }
         await validate(data);
         req.body = data;

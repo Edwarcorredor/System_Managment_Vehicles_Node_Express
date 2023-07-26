@@ -46,7 +46,7 @@ export class ClasesAlarmas{
   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MANTENIMIENTO_ID es obligatorio"}}})
   id_mantenimiento: number
 
-  constructor(p1:string ="hola", p2:string ="hola", p3:number = 1){
+  constructor(p1:string ="Nombre ", p2:string ="Descripcion ", p3:number = 1){
   this.nombre = p1;
   this.descripcion = p2;
   this.id_mantenimiento = p3;

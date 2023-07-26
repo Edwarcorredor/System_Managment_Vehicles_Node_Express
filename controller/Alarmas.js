@@ -44,8 +44,8 @@ export class Alarmas {
 __decorate([
     Expose({ name: "VEHICULO_ID", }),
     Transform(({ value }) => {
-        let data = /^[0-9]\d+$/g.test(value);
-        if (data && typeof value == "number") {
+        let data = /^([1-9]\d*)$/g.test(value);
+        if (data) {
             return Number(value);
         }
         else {
@@ -58,8 +58,8 @@ __decorate([
 __decorate([
     Expose({ name: "CLASE_ALARMA_ID" }),
     Transform(({ value }) => {
-        let data = /^[0-9]\d+$/g.test(value);
-        if (data && typeof value == "number") {
+        let data = /^([1-9]\d*)$/g.test(value);
+        if (data) {
             return Number(value);
         }
         else {

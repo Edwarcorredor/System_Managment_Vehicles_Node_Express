@@ -27,7 +27,7 @@ app.use('/surcursales_proveedores', validateJWT, sucursalesProveedoresRouter);
 app.use('/mantenimientos', validateJWT, mantenimientosRouter);
 app.use('/vehiculos', validateJWT, vehiculosRouter);
 app.use('/clases_alarmas', validateJWT, clasesAlarmasRouter);
-app.use('/alarmas',validateJWT, validateJWT, alarmasRouter);
+app.use('/alarmas',validateJWT, alarmasRouter);
 app.use('/registros_mantenimientos', validateJWT, registrosMantenimientosRouter);
 
 

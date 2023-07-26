@@ -20,7 +20,6 @@ dotenv.config("../");
 
 tokenJWT.use(async(req,res,next)=>{
     let inst;
-    console.log(req.query.tabla);
     switch (req.query.tabla) {
         case 'alarmas':
             inst = plainToClass(Alarmas, {}, { ignoreDecorators: true })
@@ -70,10 +69,11 @@ tokenJWT.use(async(req,res,next)=>{
     let interfaceData = classToPlain(inst);
     const encoder = new TextEncoder();
     const jwtconstructor = new SignJWT({interfaceData});
+    
     const jwt = await jwtconstructor
     .setProtectedHeader({alg:"HS256", typ: "JWT"})
     .setIssuedAt()
-    .setExpirationTime("5m")
+    .setExpirationTime("25m")
     .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
     req.data = jwt;
     next();
