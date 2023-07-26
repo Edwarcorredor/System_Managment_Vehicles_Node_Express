@@ -9,31 +9,42 @@ export class Marcas{
     ** nombre, pais_origen, sitio_web
     */
 
-    @Expose({name: "nombre"})
-    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
-    NAME: string
+    @Expose({name: "NAME"})
+    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
+    nombre: string
 
-    @Expose({name: "pais_origen"})
-    @IsString({message: ()=> "El pais_origen debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro pais_origen es obligatorio"}}})
-    ORIGEN_PAIS: string
+    @Expose({name: "ORIGEN_PAIS"})
+    @IsString({message: ()=> "El ORIGEN_PAIS debe ser una cadena de texto" })
+    pais_origen: string
 
-    @Expose({name: "sitio_web"})
+    @Expose({name: "WEB_SITE"})
     @IsUrl({}, { message: "La URL no es válida" })
-    WEB_SITE: string
+    sitio_web: string
 
-    constructor(p1:string, p2:string, p3:string){
-        this.NAME = p1;
-        this.ORIGEN_PAIS = p2;
-        this.WEB_SITE = p3;
+    constructor(p1:string ="", p2:string, p3:string){
+        this.nombre = p1;
+        this.pais_origen = p2;
+        this.sitio_web = p3;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO marca SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM marca
+          `);
+          return rows;
+        })();
     }
 }

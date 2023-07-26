@@ -1,5 +1,5 @@
 import { Type, Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber } from 'class-validator';
+import { IsDefined, IsInt, ValidateNested, IsPositive} from 'class-validator';
 import {conexion} from '../db/conexion_db.js'
 
 export class Alarmas{
@@ -7,25 +7,54 @@ export class Alarmas{
     ** Variables de entrada:
     ** id_vehiculo, id_clase_alarma
     */
-    @Expose({name: "id_vehiculo",})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_vehiculo no es correcto"}}})
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_vehiculo es obligatorio"}}})
-    VEHICULO_ID: number
+    @Expose({name: "VEHICULO_ID",})
+    @Transform(({value}) => {
+      let data = /^\d+$/g.test(value);
+      if (data && typeof value == "number"){ 
+          return Number(value);
+      } 
+      else{
+          throw {status:401, message:"Error en el VEHICULO_ID"};
+      }    
+    })
+    @IsDefined({ message: 'El parametro VEHICULO_ID es obligatorio.' })
+    id_vehiculo: number
 
-    @Expose({name: "id_clase_alarma"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_clase_alarma no es correcto"}}})
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_clase_alarma es obligatorio"}}})
-    CLASE_ALARMA_ID: number
+    @Expose({name: "CLASE_ALARMA_ID"})
+    @Transform(({value}) => {
+      let data = /^\d+$/g.test(value);
+      if (data && typeof value == "number"){ 
+          return Number(value);
+      } 
+      else{
+          throw {status:401, message:"Error en el CLASE_ALARMA_ID"};
+      }    
+    })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro CLASE_ALARMA_ID es obligatorio"}}})
+    id_clase_alarma: number
 
-    constructor(p1:number, p2:number){
-        this.VEHICULO_ID = p1;
-        this.CLASE_ALARMA_ID = p2;
+    constructor(p1:number = 1, p2:number = 1){
+        this.id_vehiculo = p1;
+        this.id_clase_alarma = p2;
     }
 
-    get guardar(){
-        return conexion.query(/*sql*/`SELECT * FROM alarma`, 
-        (err, data, fields)=> 
-        console.log(data)
-        )
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO alarma SET ?`,
+        body,
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        });
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM alarma
+          `);
+          return rows;
+        })();
     }
 }

@@ -7,29 +7,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Expose } from "class-transformer";
 import { IsDefined, IsNumber, IsString } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Mantenimientos {
-    constructor(p1, p2) {
-        this.SUCURSAL_ID = p1;
-        this.DESCRIPTION = p2;
+    constructor(p1 = 1, p2 = "") {
+        this.id_sucursal_proveedor = p1;
+        this.descripcion = p2;
     }
-    get guardar() {
-        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+    set guardar(body) {
+        conexion.query(/*sql*/ `INSERT INTO mantenimiento SET ?`, body, (err, data, fields) => {
+            console.log(err);
             console.log(data);
+            console.log(fields);
         });
-        return "";
+    }
+    get allTabla() {
+        const cox = conexion.promise();
+        return (() => __awaiter(this, void 0, void 0, function* () {
+            const [rows, fields] = yield cox.execute(/*sql*/ `
+          SELECT * FROM mantenimiento
+          `);
+            return rows;
+        }))();
     }
 }
 __decorate([
-    Expose({ name: "id_sucursal_proveedor" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_sucursal_proveedor no es correcto" }; } }),
+    Expose({ name: "SUCURSAL_ID" }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro SUCURSAL_ID no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro SUCURSAL_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
-], Mantenimientos.prototype, "SUCURSAL_ID", void 0);
+], Mantenimientos.prototype, "id_sucursal_proveedor", void 0);
 __decorate([
-    Expose({ name: "descripcion" }),
-    IsString({ message: () => "La descripcion debe ser una cadena de texto" }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_vehiculo es obligatorio" }; } }),
+    Expose({ name: "DESCRIPTION" }),
+    IsString({ message: () => "La DESCRIPTION debe ser una cadena de texto" }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro DESCRIPTION es obligatorio" }; } }),
     __metadata("design:type", String)
-], Mantenimientos.prototype, "DESCRIPTION", void 0);
+], Mantenimientos.prototype, "descripcion", void 0);

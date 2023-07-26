@@ -10,25 +10,25 @@ import proveedoreesRouter from "./router/proveedoresRouter.js";
 import registrosMantenimientosRouter from "./router/registrosMantenimientosRouter.js";
 import sucursalesProveedoresRouter from "./router/sucursalesProveedoresRouter.js";
 import vehiculosRouter from "./router/vehiculosRouter.js";
-
-
+import appJWT from './router/JWT.js';
+import {validateJWT} from "./middleware/middleJWT.js";
 
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 
-
-app.use('/empresas', empresasRouter);
-app.use('/marcas', marcasRouter);                       
-app.use('/modelos', modelosRouter);
-app.use('/proveedorees', proveedoreesRouter);
-app.use('/surcursales_proveedores', sucursalesProveedoresRouter);
-app.use('/mantenimientos', mantenimientosRouter);
-app.use('/vehiculos', vehiculosRouter);
-app.use('/clases_alarmas', clasesAlarmasRouter);
-app.use('/alarmas', alarmasRouter);
-app.use('/registros_mantenimientos', registrosMantenimientosRouter);
+app.use("/token", appJWT);
+app.use('/empresas', validateJWT, empresasRouter);
+app.use('/marcas', validateJWT, marcasRouter);                       
+app.use('/modelos', validateJWT, modelosRouter);
+app.use('/proveedorees', validateJWT, proveedoreesRouter);
+app.use('/surcursales_proveedores', validateJWT, sucursalesProveedoresRouter);
+app.use('/mantenimientos', validateJWT, mantenimientosRouter);
+app.use('/vehiculos', validateJWT, vehiculosRouter);
+app.use('/clases_alarmas', validateJWT, clasesAlarmasRouter);
+app.use('/alarmas',validateJWT, validateJWT, alarmasRouter);
+app.use('/registros_mantenimientos', validateJWT, registrosMantenimientosRouter);
 
 
 

@@ -3,24 +3,13 @@ import { middleModelos } from '../middleware/middleModelos.js'
 
 const modelosRouter = Router();
 
-modelosRouter.get('/', middleModelos, (req, res) => {
-    res.send(req.body.guardar);
+modelosRouter.get('/', middleModelos, async(req,res)=>{
+  res.send(await req.body.allTabla);
 })
 
-modelosRouter.post('/', (req, res) => {
-    const { MARCA_ID, NAME, LANZAMIENTO } = req.body;
-    req.conexion.query(
-        /*sql*/`INSERT INTO marca (id_marca, nombre, anio_lanzamiento) VALUES (?, ?, ?)`,
-        [MARCA_ID, NAME, LANZAMIENTO],
-        (error, results) => {
-            if (error) {
-              console.error(error);
-              res.status(500).send(error);
-            }
-            res.status(200).send(results);
-          }
-
-    )
+modelosRouter.post('/', (req,res)=>{
+  req.body.guardar = JSON.parse(req.data);
+  res.json({status: 201, message: "Datos guardados"});
 });
 
 export default modelosRouter;

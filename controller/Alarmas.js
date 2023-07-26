@@ -7,27 +7,65 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Expose } from "class-transformer";
-import { IsDefined, IsNumber } from 'class-validator';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { Transform, Expose } from "class-transformer";
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Alarmas {
-    constructor(p1, p2) {
-        this.VEHICULO_ID = p1;
-        this.CLASE_ALARMA_ID = p2;
+    constructor(p1 = 1, p2 = 1) {
+        this.id_vehiculo = p1;
+        this.id_clase_alarma = p2;
     }
-    get guardar() {
-        return conexion.query(/*sql*/ `SELECT * FROM alarma`, (err, data, fields) => console.log(data));
+    set guardar(body) {
+        conexion.query(/*sql*/ `INSERT INTO alarma SET ?`, body, (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
+    get allTabla() {
+        const cox = conexion.promise();
+        return (() => __awaiter(this, void 0, void 0, function* () {
+            const [rows, fields] = yield cox.execute(/*sql*/ `
+          SELECT * FROM alarma
+          `);
+            return rows;
+        }))();
     }
 }
 __decorate([
-    Expose({ name: "id_vehiculo", }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_vehiculo no es correcto" }; } }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_vehiculo es obligatorio" }; } }),
+    Expose({ name: "VEHICULO_ID", }),
+    Transform(({ value }) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number") {
+            return Number(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el VEHICULO_ID" };
+        }
+    }),
+    IsDefined({ message: 'El parametro VEHICULO_ID es obligatorio.' }),
     __metadata("design:type", Number)
-], Alarmas.prototype, "VEHICULO_ID", void 0);
+], Alarmas.prototype, "id_vehiculo", void 0);
 __decorate([
-    Expose({ name: "id_clase_alarma" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_clase_alarma no es correcto" }; } }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_clase_alarma es obligatorio" }; } }),
+    Expose({ name: "CLASE_ALARMA_ID" }),
+    Transform(({ value }) => {
+        let data = /^\d+$/g.test(value);
+        if (data && typeof value == "number") {
+            return Number(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el CLASE_ALARMA_ID" };
+        }
+    }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro CLASE_ALARMA_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
-], Alarmas.prototype, "CLASE_ALARMA_ID", void 0);
+], Alarmas.prototype, "id_clase_alarma", void 0);

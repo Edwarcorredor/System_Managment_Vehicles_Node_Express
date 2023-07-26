@@ -7,35 +7,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Expose } from "class-transformer";
 import { IsDefined, IsNumber, IsString } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Modelos {
-    constructor(p1, p2, p3) {
-        this.MARCA_ID = p1;
-        this.NAME = p2;
-        this.LANZAMIENTO = p3;
+    constructor(p1 = 1, p2 = "", p3) {
+        this.id_marca = p1;
+        this.nombre = p2;
+        this.anio_lanzamiento = p3;
     }
-    get guardar() {
-        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+    set guardar(body) {
+        conexion.query(/*sql*/ `INSERT INTO modelo SET ?`, body, (err, data, fields) => {
+            console.log(err);
             console.log(data);
+            console.log(fields);
         });
-        return "";
+    }
+    get allTabla() {
+        const cox = conexion.promise();
+        return (() => __awaiter(this, void 0, void 0, function* () {
+            const [rows, fields] = yield cox.execute(/*sql*/ `
+          SELECT * FROM modelo
+          `);
+            return rows;
+        }))();
     }
 }
 __decorate([
-    Expose({ name: "id_marca" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_marca no es correcto" }; } }),
+    Expose({ name: "MARCA_ID" }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro MARCA_ID no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro MARCA_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
-], Modelos.prototype, "MARCA_ID", void 0);
+], Modelos.prototype, "id_marca", void 0);
 __decorate([
-    Expose({ name: "nombre" }),
-    IsString({ message: () => "El nombre debe ser una cadena de texto" }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro nombre es obligatorio" }; } }),
+    Expose({ name: "NAME" }),
+    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
-], Modelos.prototype, "NAME", void 0);
+], Modelos.prototype, "nombre", void 0);
 __decorate([
-    Expose({ name: "anio_lanzamiento" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro anio_lanzamiento no es correcto" }; } }),
+    Expose({ name: "LANZAMIENTO_ANIO" }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro LANZAMIENTO_ANIO no es correcto" }; } }),
     __metadata("design:type", Number)
-], Modelos.prototype, "LANZAMIENTO", void 0);
+], Modelos.prototype, "anio_lanzamiento", void 0);

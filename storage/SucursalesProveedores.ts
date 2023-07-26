@@ -8,41 +8,54 @@ export class SucursalesProveedores{
     ** id_proveedor, nombre, direccion, telefono, email
     */
 
-    @Expose({name: "id_proveedor"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_proveedor no es correcto"}}})
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_proveedor es obligatorio"}}})
-    PROVEEDOR_ID: number
+    @Expose({name: "PROVEEDOR_ID"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro PROVEEDOR_ID no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro PROVEEDOR_ID es obligatorio"}}})
+    id_proveedor: number
 
-    @Expose({name: "nombre"})
-    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
-    NAME: string
+    @Expose({name: "NAME"})
+    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
+    nombre: string
 
-    @Expose({name: "direccion"})
-    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_sucursal" ; else throw {status: 406, message: "El formato del parametro direccion  no es correcto"};}, { toClassOnly: true })
-    ADDRESS: string
+    @Expose({name: "ADDRESS"})
+    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_sucursal" ; else throw {status: 406, message: "El formato del parametro ADDRESS  no es correcto"};}, { toClassOnly: true })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro ADDRESS es obligatorio"}}})
+    direccion: string
 
-    @Expose({name: "telefono"})
-    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro telefono  no cumple con el formato solicitado"};}, { toClassOnly: true })
-    PHONE: string
+    @Expose({name: "PHONE"})
+    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro PHONE  no cumple con el formato solicitado"};}, { toClassOnly: true })
+    telefono: string
 
-    @Expose({name: "email"})
+    @Expose({name: "EMAIL"})
     @IsEmail({}, { message: "El correo electrónico no es válido" })
-    EMAIL: string
+    email: string
 
     constructor(p1:number, p2:string, p3:string, p4:string, p5:string){
-        this.PROVEEDOR_ID = p1;
-        this.NAME = p2;
-        this.ADDRESS = p3;
-        this.PHONE = p4;
-        this.EMAIL = p5;
+        this.id_proveedor = p1;
+        this.nombre = p2;
+        this.direccion = p3;
+        this.telefono = p4;
+        this.email = p5;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO sucursal_proveedor SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM sucursal_proveedor
+          `);
+          return rows;
+        })();
     }
 }

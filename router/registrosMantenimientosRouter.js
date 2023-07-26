@@ -3,8 +3,12 @@ import { middleRegistrosMantenimientos } from '../middleware/middleRegistrosMant
 
 const registrosMantenimientosRouter = Router();
 
-registrosMantenimientosRouter.get('/', middleRegistrosMantenimientos, (req, res) => {
-    res.send(req.body.guardar);
+registrosMantenimientosRouter.get('/', middleRegistrosMantenimientos, async(req,res)=>{
+    res.send(await req.body.allTabla);
 })
 
+registrosMantenimientosRouter.post('/', (req,res)=>{
+    req.body.guardar = JSON.parse(req.data);
+    res.json({status: 201, message: "Datos guardados"});
+  });
 export default registrosMantenimientosRouter;

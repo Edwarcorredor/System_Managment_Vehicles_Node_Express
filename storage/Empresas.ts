@@ -9,41 +9,54 @@ export class Empresas{
     ** nombre, direccion, telefono, email, sitio_web
     */
 
-    @Expose({name: "nombre"})
-    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
-    NAME: string
+    @Expose({name: "NAME"})
+    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
+    nombre: string
 
-    @Expose({name: "direccion"})
-    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_empresa" ; else throw {status: 406, message: "El formato del parametro direccion  no es correcto"};}, { toClassOnly: true })
-    ADDRESS: string
+    @Expose({name: "ADDRESS"})
+    @Transform(({ value }) => { if(/^[a-z A-Z 0-9]+$/.test(value)) return (value) ? value : "direccion_empresa" ; else throw {status: 406, message: "El formato del parametro ADDRESS  no es correcto"};}, { toClassOnly: true })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro ADDRESS es obligatorio"}}})
+    direccion: string
 
-    @Expose({name: "telefono"})
-    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro telefono  no cumple con el formato solicitado"};}, { toClassOnly: true })
-    PHONE: string
+    @Expose({name: "PHONE"})
+    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return value ; else throw {status: 400, message: "El parametro PHONE  no cumple con el formato solicitado"};}, { toClassOnly: true })
+    telefono: string
 
-    @Expose({name: "email"})
+    @Expose({name: "EMAIL"})
     @IsEmail({}, { message: "El correo electrónico no es válido" })
-    EMAIL: string
+    email: string
 
-    @Expose({name: "sitio_web"})
+    @Expose({name: "SITE_WEB"})
     @IsUrl({}, { message: "La URL no es válida" })
-    SITE_WEB: string
+    sitio_web: string
 
-    constructor(p1:string, p2:string, p3:string, p4:string, p5:string){
-        this.NAME = p1;
-        this.ADDRESS = p2;
-        this.PHONE = p3;
-        this.EMAIL = p4;
-        this.SITE_WEB = p5;
+    constructor(p1:string ="", p2:string ="calle1", p3:string, p4:string, p5:string){
+        this.nombre = p1;
+        this.direccion = p2;
+        this.telefono = p3;
+        this.email = p4;
+        this.sitio_web = p5;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO empresa SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM empresa
+          `);
+          return rows;
+        })();
     }
     
 }

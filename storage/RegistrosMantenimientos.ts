@@ -9,26 +9,38 @@ export class RegistrosMantenimientos{
     ** id_alarma, costo 
     */
 
-    @Expose({name: "id_alarma"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_alarma no es correcto"}}})
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_alarma es obligatorio"}}})
-    ALARMA_ID: number
+    @Expose({name: "ALARMA_ID"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro ALARMA_ID no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro ALARMA_ID es obligatorio"}}})
+    id_alarma: number
 
-    @Expose({name: "costo"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro costo no es correcto"}}})
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro costo es obligatorio"}}})
-    COST: number
+    @Expose({name: "COST"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro COST no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro COST es obligatorio"}}})
+    costo: number
 
-    constructor(p1:number, p2:number){
-        this.ALARMA_ID = p1;
-        this.COST = p2;
+    constructor(p1:number = 1, p2:number = 1 ){
+        this.id_alarma = p1;
+        this.costo = p2;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO registro_mantenimiento SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM registro_mantenimiento
+          `);
+          return rows;
+        })();
     }
 }

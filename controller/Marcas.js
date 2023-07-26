@@ -7,36 +7,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Expose } from "class-transformer";
 import { IsDefined, IsString, IsUrl } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Marcas {
-    constructor(p1, p2, p3) {
-        this.NAME = p1;
-        this.ORIGEN_PAIS = p2;
-        this.WEB_SITE = p3;
+    constructor(p1 = "", p2, p3) {
+        this.nombre = p1;
+        this.pais_origen = p2;
+        this.sitio_web = p3;
     }
-    get guardar() {
-        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+    set guardar(body) {
+        conexion.query(/*sql*/ `INSERT INTO marca SET ?`, body, (err, data, fields) => {
+            console.log(err);
             console.log(data);
+            console.log(fields);
         });
-        return "";
+    }
+    get allTabla() {
+        const cox = conexion.promise();
+        return (() => __awaiter(this, void 0, void 0, function* () {
+            const [rows, fields] = yield cox.execute(/*sql*/ `
+          SELECT * FROM marca
+          `);
+            return rows;
+        }))();
     }
 }
 __decorate([
-    Expose({ name: "nombre" }),
-    IsString({ message: () => "El nombre debe ser una cadena de texto" }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro nombre es obligatorio" }; } }),
+    Expose({ name: "NAME" }),
+    IsString({ message: () => "El NAME debe ser una cadena de texto" }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro NAME es obligatorio" }; } }),
     __metadata("design:type", String)
-], Marcas.prototype, "NAME", void 0);
+], Marcas.prototype, "nombre", void 0);
 __decorate([
-    Expose({ name: "pais_origen" }),
-    IsString({ message: () => "El pais_origen debe ser una cadena de texto" }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro pais_origen es obligatorio" }; } }),
+    Expose({ name: "ORIGEN_PAIS" }),
+    IsString({ message: () => "El ORIGEN_PAIS debe ser una cadena de texto" }),
     __metadata("design:type", String)
-], Marcas.prototype, "ORIGEN_PAIS", void 0);
+], Marcas.prototype, "pais_origen", void 0);
 __decorate([
-    Expose({ name: "sitio_web" }),
+    Expose({ name: "WEB_SITE" }),
     IsUrl({}, { message: "La URL no es válida" }),
     __metadata("design:type", String)
-], Marcas.prototype, "WEB_SITE", void 0);
+], Marcas.prototype, "sitio_web", void 0);

@@ -9,25 +9,38 @@ export class Mantenimientos{
     ** id_sucursal_proveedor, descripcion 
     */
 
-    @Expose({ name: "id_sucursal_proveedor"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_sucursal_proveedor no es correcto"}}})
-    SUCURSAL_ID: number
+    @Expose({ name: "SUCURSAL_ID"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro SUCURSAL_ID no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro SUCURSAL_ID es obligatorio"}}})
+    id_sucursal_proveedor: number
 
-    @Expose({ name: "descripcion"})
-    @IsString({message: ()=> "La descripcion debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_vehiculo es obligatorio"}}})
-    DESCRIPTION: string
+    @Expose({ name: "DESCRIPTION"})
+    @IsString({message: ()=> "La DESCRIPTION debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro DESCRIPTION es obligatorio"}}})
+    descripcion: string
 
-    constructor(p1:number, p2:string){
-        this.SUCURSAL_ID = p1;
-        this.DESCRIPTION = p2;
+    constructor(p1:number = 1, p2:string = ""){
+        this.id_sucursal_proveedor = p1;
+        this.descripcion = p2;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO mantenimiento SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM mantenimiento
+          `);
+          return rows;
+        })();
     }
 }

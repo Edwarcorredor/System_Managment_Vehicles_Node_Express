@@ -6,10 +6,17 @@ import {validate} from 'class-validator';
 const middleVehiculos = express();
 
 middleVehiculos.use(async(req,res,next)=>{
+
     try {
-        let data = plainToClass(Vehiculos, req.body, { excludeExtraneousValues: true });
+        if(req.method=="GET"){
+            var data = plainToClass(Vehiculos, req.data.interfaceData, { excludeExtraneousValues: true });
+        }
+        else{
+            var data = plainToClass(Vehiculos, req.body, { excludeExtraneousValues: true });
+        }
         await validate(data);
         req.body = data;
+        req.data = JSON.stringify(data);
         next();
     } catch (err) {
         res.status(err.status).json(err)

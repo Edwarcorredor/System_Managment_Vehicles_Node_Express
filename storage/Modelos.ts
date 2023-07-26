@@ -9,30 +9,43 @@ export class Modelos{
     ** id_marca, nombre, anio_lanzamiento
     */
 
-    @Expose({name: "id_marca"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_marca no es correcto"}}})
-    MARCA_ID: number
+    @Expose({name: "MARCA_ID"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro MARCA_ID no es correcto"}}})
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MARCA_ID es obligatorio"}}})
+    id_marca: number
 
-    @Expose({name: "nombre"})
-    @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
-    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
-    NAME: string
+    @Expose({name: "NAME"})
+    @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+    @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
+    nombre: string
 
-    @Expose({name: "anio_lanzamiento"})
-    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro anio_lanzamiento no es correcto"}}})
-    LANZAMIENTO: number
+    @Expose({name: "LANZAMIENTO_ANIO"})
+    @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro LANZAMIENTO_ANIO no es correcto"}}})
+    anio_lanzamiento: number
 
-    constructor(p1:number, p2:string, p3:number){
-        this.MARCA_ID = p1;
-        this.NAME = p2;
-        this.LANZAMIENTO = p3;
+    constructor(p1:number = 1, p2:string = "", p3:number){
+        this.id_marca = p1;
+        this.nombre = p2;
+        this.anio_lanzamiento = p3;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM empresa`, 
+    set guardar(body:object){
+        conexion.query(/*sql*/`INSERT INTO modelo SET ?`,
+        body,
         (err, data, fields)=>{
-         console.log(data);
+         console.log(err)
+         console.log(data)
+         console.log(fields)
         });
-        return "";
+    }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM modelo
+          `);
+          return rows;
+        })();
     }
 }

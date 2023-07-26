@@ -7,30 +7,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Expose } from "class-transformer";
 import { IsDefined, IsNumber } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class RegistrosMantenimientos {
-    constructor(p1, p2) {
-        this.ALARMA_ID = p1;
-        this.COST = p2;
+    constructor(p1 = 1, p2 = 1) {
+        this.id_alarma = p1;
+        this.costo = p2;
     }
-    get guardar() {
-        conexion.query(/*sql*/ `SELECT * FROM empresa`, (err, data, fields) => {
+    set guardar(body) {
+        conexion.query(/*sql*/ `INSERT INTO registro_mantenimiento SET ?`, body, (err, data, fields) => {
+            console.log(err);
             console.log(data);
+            console.log(fields);
         });
-        return "";
+    }
+    get allTabla() {
+        const cox = conexion.promise();
+        return (() => __awaiter(this, void 0, void 0, function* () {
+            const [rows, fields] = yield cox.execute(/*sql*/ `
+          SELECT * FROM registro_mantenimiento
+          `);
+            return rows;
+        }))();
     }
 }
 __decorate([
-    Expose({ name: "id_alarma" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id_alarma no es correcto" }; } }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro id_alarma es obligatorio" }; } }),
+    Expose({ name: "ALARMA_ID" }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro ALARMA_ID no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro ALARMA_ID es obligatorio" }; } }),
     __metadata("design:type", Number)
-], RegistrosMantenimientos.prototype, "ALARMA_ID", void 0);
+], RegistrosMantenimientos.prototype, "id_alarma", void 0);
 __decorate([
-    Expose({ name: "costo" }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro costo no es correcto" }; } }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro costo es obligatorio" }; } }),
+    Expose({ name: "COST" }),
+    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro COST no es correcto" }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: "El parametro COST es obligatorio" }; } }),
     __metadata("design:type", Number)
-], RegistrosMantenimientos.prototype, "COST", void 0);
+], RegistrosMantenimientos.prototype, "costo", void 0);

@@ -3,24 +3,13 @@ import { middleMantenimientos } from '../middleware/middleMantenimientos.js'
 
 const mantenimientosRouter = Router();
 
-mantenimientosRouter.get('/', middleMantenimientos, (req, res) => {
-    res.send(req.body.guardar);
+mantenimientosRouter.get('/', middleMantenimientos, async(req,res)=>{
+  res.send(await req.body.allTabla);
 })
 
-mantenimientosRouter.post('/', (req, res) => {
-    const { SUCURSAL_ID, DESCRIPTION } = req.body;
-    req.conexion.query(
-        /*sql*/`INSERT INTO mantenimiento (id_sucursal_proveedor, descripcion) VALUES (?, ?)`,
-        [SUCURSAL_ID, DESCRIPTION],
-        (error, results) => {
-            if (error) {
-              console.error(error);
-              res.status(500).send(error);
-            }
-            res.status(200).send(results);
-          }
-
-    )
+mantenimientosRouter.post('/', (req,res)=>{
+  req.body.guardar = JSON.parse(req.data);
+  res.json({status: 201, message: "Datos guardados"});
 });
 
 

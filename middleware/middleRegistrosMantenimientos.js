@@ -6,10 +6,17 @@ import {validate} from 'class-validator';
 const middleRegistrosMantenimientos = express();
 
 middleRegistrosMantenimientos.use(async(req,res,next)=>{
+
     try {
-        let data = plainToClass(RegistrosMantenimientos, req.body, { excludeExtraneousValues: true });
+        if(req.method=="GET"){
+            var data = plainToClass(RegistrosMantenimientos, req.data.interfaceData, { excludeExtraneousValues: true });
+        }
+        else{
+            var data = plainToClass(RegistrosMantenimientos, req.body, { excludeExtraneousValues: true });
+        }
         await validate(data);
         req.body = data;
+        req.data = JSON.stringify(data);
         next();
     } catch (err) {
         res.status(err.status).json(err)

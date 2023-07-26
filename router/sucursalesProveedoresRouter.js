@@ -3,8 +3,13 @@ import { middleSucursalesProveedores } from '../middleware/middleSucursalesProve
 
 const sucursalesProveedoresRouter = Router();
 
-sucursalesProveedoresRouter.get('/', middleSucursalesProveedores, (req, res) => {
-    res.send(req.body.guardar);
+sucursalesProveedoresRouter.get('/', middleSucursalesProveedores, async(req,res)=>{
+    res.send(await req.body.allTabla);
 })
+
+sucursalesProveedoresRouter.post('/', (req,res)=>{
+    req.body.guardar = JSON.parse(req.data);
+    res.json({status: 201, message: "Datos guardados"});
+});
 
 export default sucursalesProveedoresRouter;

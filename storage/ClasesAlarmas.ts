@@ -7,31 +7,43 @@ export class ClasesAlarmas{
     ** Variables de entrada:
     ** nombre, descripcion, id_mantenimiento
     */
-   @Expose({name: "nombre"})
-   @IsString({message: ()=> "El nombre debe ser una cadena de texto" })
-   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro nombre es obligatorio"}}})
-   NAME: string
+   @Expose({name: "NAME"})
+   @IsString({message: ()=> "El NAME debe ser una cadena de texto" })
+   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro NAME es obligatorio"}}})
+   nombre: string
 
-   @Expose({name: "descripcion"})
-   @IsString({message: ()=> "La descripcion debe ser una cadena de texto" })
-   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro id_vehiculo es obligatorio"}}})
-   DESCRIPTION: string
+   @Expose({name: "DESCRIPTION"})
+   @IsString({message: ()=> "La DESCRIPTION debe ser una cadena de texto" })
+   @IsDefined({message: ()=>{ throw {status:422, message: "El parametro DESCRIPTION es obligatorio"}}})
+   descripcion: string
 
-   @Expose({name: "id_mantenimiento"})
-   @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro id_mantenimiento no es correcto"}}})
-   MANTENIMIENTO_ID: number
+   @Expose({name: "MANTENIMIENTO_ID"})
+   @IsNumber({}, {message: ()=>{throw {status: 406, message:"El formato del parametro MANTENIMIENTO_ID no es correcto"}}})
+   id_mantenimiento: number
 
-   constructor(p1:string, p2:string, p3:number){
-    this.NAME = p1;
-    this.DESCRIPTION = p2;
-    this.MANTENIMIENTO_ID = p3;
+   constructor(p1:string ="", p2:string ="", p3:number = 1){
+    this.nombre = p1;
+    this.descripcion = p2;
+    this.id_mantenimiento = p3;
     }
 
-    get guardar(){
-        conexion.query(/*sql*/`SELECT * FROM clase_alarma`, 
-        (err, data, fields)=>{
-         console.log(data);
-        });
-        return "";
+    set guardar(body:object){
+      conexion.query(/*sql*/`INSERT INTO clase_alarma SET ?`,
+      body,
+      (err, data, fields)=>{
+       console.log(err)
+       console.log(data)
+       console.log(fields)
+      });
+  }
+
+    get allTabla(){
+        const cox = conexion.promise();
+        return (async()=>{
+          const [rows, fields] = await cox.execute(/*sql*/`
+          SELECT * FROM clase_alarma
+          `);
+          return rows;
+        })();
     }
 }
