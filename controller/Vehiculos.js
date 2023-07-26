@@ -17,10 +17,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Transform, Expose } from "class-transformer";
-import { IsDefined, IsString } from 'class-validator';
+import { IsDefined } from 'class-validator';
 import { conexion } from '../db/conexion_db.js';
 export class Vehiculos {
-    constructor(p1, p2, p3, p4, p5) {
+    constructor(p1 = 1, p2 = 1, p3 = "1234", p4 = "placa", p5 = "estado") {
         this.id_empresa = p1;
         this.id_modelo = p2;
         this.numero_serie = p3;
@@ -47,7 +47,7 @@ export class Vehiculos {
 __decorate([
     Expose({ name: "EMPRESA_ID" }),
     Transform(({ value }) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number") {
             return Number(value);
         }
@@ -61,12 +61,12 @@ __decorate([
 __decorate([
     Expose({ name: "MODELO_ID" }),
     Transform(({ value }) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number") {
             return Number(value);
         }
         else {
-            throw { status: 401, message: "Error en el EMPRESA_ID" };
+            throw { status: 401, message: "Error en el MODELO_ID" };
         }
     }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro MODELO_ID es obligatorio" }; } }),
@@ -74,22 +74,43 @@ __decorate([
 ], Vehiculos.prototype, "id_modelo", void 0);
 __decorate([
     Expose({ name: "SERIE_NUMERO" }),
-    Transform(({ value }) => { if (/^[0-9]+$/.test(value))
-        return value;
-    else
-        throw { status: 400, message: "El parametro SERIE_NUMERO  no cumple con el formato solicitado" }; }, { toClassOnly: true }),
+    Transform(({ value }) => {
+        let data = /^([0-9]\d*)$/g.test(value);
+        if (data) {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el SERIE_NUMERO" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro SERIE_NUMERO es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Vehiculos.prototype, "numero_serie", void 0);
 __decorate([
     Expose({ name: "PLATE" }),
-    IsString({ message: () => "La placa debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z0-9 ]+$/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el PLATE" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro PLATE es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Vehiculos.prototype, "placa", void 0);
 __decorate([
     Expose({ name: "STATE" }),
-    IsString({ message: () => "El STATE debe ser una cadena de texto" }),
+    Transform(({ value }) => {
+        let data = /^[a-zA-Z ]+$/g.test(value);
+        if (data && typeof value == "string") {
+            return String(value);
+        }
+        else {
+            throw { status: 401, message: "Error en el STATE" };
+        }
+    }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro STATE es obligatorio" }; } }),
     __metadata("design:type", String)
 ], Vehiculos.prototype, "estado", void 0);

@@ -11,7 +11,7 @@ export class Vehiculos{
 
     @Expose({name: "EMPRESA_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
@@ -24,33 +24,57 @@ export class Vehiculos{
 
     @Expose({name: "MODELO_ID"})
     @Transform(({value}) => {
-        let data = /^\d+$/g.test(value);
+        let data = /^([1-9]\d*)$/g.test(value);
         if (data && typeof value == "number"){ 
             return Number(value);
         } 
         else{
-            throw {status:401, message:"Error en el EMPRESA_ID"};
+            throw {status:401, message:"Error en el MODELO_ID"};
         }    
     })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro MODELO_ID es obligatorio"}}})
     id_modelo: number
 
     @Expose({name: "SERIE_NUMERO"})
-    @Transform(({ value }) => { if(/^[0-9]+$/.test(value)) return value ; else throw {status: 400, message: "El parametro SERIE_NUMERO  no cumple con el formato solicitado"};}, { toClassOnly: true })
+    @Transform(({value}) => {
+        let data = /^([0-9]\d*)$/g.test(value);
+        if (data){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el SERIE_NUMERO"};
+        }    
+    })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro SERIE_NUMERO es obligatorio"}}})
     numero_serie: string
 
     @Expose({name: "PLATE"})
-    @IsString({message: ()=> "La placa debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^[a-zA-Z0-9 ]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el PLATE"};
+        }    
+      })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro PLATE es obligatorio"}}})
     placa: string
 
     @Expose({name: "STATE"})
-    @IsString({message: ()=> "El STATE debe ser una cadena de texto" })
+    @Transform(({value}) => {
+        let data = /^[a-zA-Z ]+$/g.test(value);
+        if ( data && typeof value == "string"){ 
+            return String(value);
+        } 
+        else{
+            throw {status:401, message:"Error en el STATE"};
+        }    
+      })
     @IsDefined({message: ()=>{ throw {status:422, message: "El parametro STATE es obligatorio"}}})
     estado: string
 
-    constructor(p1:number, p2:number, p3:string, p4:string, p5:string){
+    constructor(p1:number = 1, p2:number =1 , p3:string ="1234", p4:string = "placa", p5:string = "estado"){
         this.id_empresa = p1;
         this.id_modelo = p2;
         this.numero_serie = p3;
