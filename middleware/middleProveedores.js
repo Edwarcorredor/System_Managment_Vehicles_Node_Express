@@ -8,7 +8,7 @@ const middleProveedores = express();
 middleProveedores.use(async(req,res,next)=>{
 
     try {
-        if(req.method=="GET"){
+        if(req.method=="GET" || req.method=="DELETE"){
             var data = plainToClass(Proveedores, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{

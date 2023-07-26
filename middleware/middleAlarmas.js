@@ -9,7 +9,7 @@ middleAlarmas.use(async(req,res,next)=>{
 
     try {
         let data;
-        if(req.method=="GET"){
+        if(req.method=="GET" || req.method=="DELETE"){
             data = plainToClass(Alarmas, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{

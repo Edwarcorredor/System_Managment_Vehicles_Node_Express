@@ -8,7 +8,7 @@ const middleEmpresas = express();
 middleEmpresas.use(async(req,res,next)=>{
 
     try {
-        if(req.method=="GET"){
+        if(req.method=="GET" || req.method=="DELETE"){
             var data = plainToClass(Empresas, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{

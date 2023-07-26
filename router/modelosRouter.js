@@ -17,4 +17,10 @@ modelosRouter.put('/:id', middleModelos, (req,res)=>{
   res.json({status: 202, message: "Datos actualizados"});
 });
 
+modelosRouter.delete('/:id', middleModelos, (req,res)=>{
+  req.body.eliminar(req.params.id);
+  res.json({status: 202, message: "Datos eliminados"});
+});
+
+
 export default modelosRouter;

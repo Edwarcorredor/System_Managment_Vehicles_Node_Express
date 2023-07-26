@@ -17,4 +17,9 @@ alarmasRouter.put('/:id', middleAlarmas, (req,res)=>{
   res.json({status: 202, message: "Datos actualizados"});
 });
 
+alarmasRouter.delete('/:id', middleAlarmas, (req,res)=>{
+  req.body.eliminar(req.params.id);
+  res.json({status: 202, message: "Datos eliminados"});
+});
+
 export default alarmasRouter;

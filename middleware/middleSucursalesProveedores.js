@@ -8,7 +8,7 @@ const middleSucursalesProveedores = express();
 middleSucursalesProveedores.use(async(req,res,next)=>{
 
     try {
-        if(req.method=="GET"){
+        if(req.method=="GET" || req.method=="DELETE"){
             var data = plainToClass(SucursalesProveedores, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{

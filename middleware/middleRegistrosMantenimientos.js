@@ -8,7 +8,7 @@ const middleRegistrosMantenimientos = express();
 middleRegistrosMantenimientos.use(async(req,res,next)=>{
 
     try {
-        if(req.method=="GET"){
+        if(req.method=="GET" || req.method=="DELETE"){
             var data = plainToClass(RegistrosMantenimientos, req.data.interfaceData, { excludeExtraneousValues: true });
         }
         else{

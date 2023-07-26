@@ -18,4 +18,10 @@ clasesAlarmasRouter.put('/:id', middleClasesAlarmas, (req,res)=>{
   res.json({status: 202, message: "Datos actualizados"});
 });
 
+clasesAlarmasRouter.delete('/:id', middleClasesAlarmas, (req,res)=>{
+  req.body.eliminar(req.params.id);
+  res.json({status: 202, message: "Datos eliminados"});
+});
+
+
 export default clasesAlarmasRouter;
