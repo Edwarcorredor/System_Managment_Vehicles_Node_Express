@@ -61,9 +61,12 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
 
 
 3. Abra el terminal en la carpeta raiz del repositorio e instale las siguientes dependencias.
+   ```
+   npm init -y
+   ```
 
    ```
-   npm i -E -D express class-transformer class-validator dotenv jose mysql2 nodemon reflect-metadata
+   npm i -E -D express class-transformer class-validator dotenv jose mysql2 nodemon reflect-metadata typescript
    ```
 
    - express: https://github.com/expressjs/express
@@ -82,9 +85,26 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
 
    - reflect-metadata: https://github.com/typestack/class-transformer
 
-     
+   Luego editar el archivo package.json y agregarle `"type":"module"`
 
-4. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
+   Ahora para crear el archivo tsconfig.json debe ejecutar el siguiente comando
+   ```bash
+    npx tsc --init
+   ```
+   Y lo configura de la siguiente manera
+   ` {
+  "compilerOptions": {
+    "target": "es6",
+    "module": "ES6",
+    "moduleResolution": "node",
+    "outDir": "./controller",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}`
+
+5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
 
    ```bash
    MY_CONFIG = {"hostname":"127.0.0.5", "port":3000}
