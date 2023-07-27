@@ -1,5 +1,5 @@
 import { Type, Transform, Expose } from "class-transformer";
-import { IsDefined, IsNumber, IsString } from 'class-validator';
+import { IsDefined} from 'class-validator';
 import {conexion} from '../db/conexion_db.js'
 
 export class Mantenimientos{

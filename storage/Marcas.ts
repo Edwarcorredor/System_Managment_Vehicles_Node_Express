@@ -34,7 +34,7 @@ export class Marcas{
     })
     pais_origen: string
 
-    @Expose({name: "WEB_SITE"})
+    @Expose({name: "SITE_WEB"})
     @Transform(({value}) => {
         let data = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9._%+-]*)*|undefined+$/g.test(value);
         if (data){ 

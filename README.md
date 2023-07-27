@@ -175,21 +175,43 @@ El token de acceso se genera al realizar una autenticación exitosa y es indispe
 
 
 
-### Tabla "alarma"
-
-Para acceder a la tabla "alarma", existen diferentes endpoints que te permiten realizar diversas acciones.
+### Endpoints Comunes
 
 #### Obtener datos
 
-Para obtener todos los datos de la tabla "alarma", realiza una petición GET al siguiente endpoint:
+Para obtener todos los datos de una tabla específica, realiza una petición GET al siguiente endpoint:
 
 ```bash
-http://127.0.0.5:3000/alarmas
+http://127.0.0.5:3000/nombre_tabla
 ```
 
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "alarma".
+Reemplaza "nombre_tabla" con el nombre de la tabla a la que deseas acceder (por ejemplo: alarmas, empresas, mantenimientos, etc.). Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla especificada.
 
-#### Agregar datos
+
+
+#### Eliminar datos
+
+Para eliminar registros de una tabla específica, envía una petición DELETE al siguiente endpoint:
+
+```bash
+http://127.0.0.5:3000/nombre_tabla/id
+```
+
+Reemplaza "nombre_tabla" con el nombre de la tabla a la que deseas acceder (por ejemplo: alarmas, empresas, mantenimientos, etc.) y "id" con el identificador de la fila que deseas eliminar de la tabla especificada. Esta acción eliminará permanentemente el registro seleccionado.
+
+
+
+### Operaciones Específicas por Tabla
+
+A continuación, se detallan las operaciones específicas para cada tabla:
+
+Mis disculpas por la omisión. A continuación, te presento la sección "Agregar datos" y "Editar datos" para cada tabla:
+
+
+
+#### Tabla "alarma"
+
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "alarma", debes hacer una petición POST al siguiente endpoint:
 
@@ -206,11 +228,10 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 }
 ```
 
-VEHICULO_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio
+- VEHICULO_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio.
+- CLASE_ALARMA_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio.
 
-CLASE_ALARMA_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "alarma", utiliza una petición PUT al siguiente endpoint:
 
@@ -227,41 +248,16 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 }
 ```
 
-VEHICULO_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio
-
-CLASE_ALARMA_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "alarma", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/alarmas/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "alarma". Esta acción eliminará permanentemente el registro seleccionado.
+- VEHICULO_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio.
+- CLASE_ALARMA_ID: Solo recibe valores numéricos enteros y mayor a cero. Es obligatorio.
 
 
 
-### Tabla "empresa"
-
-Para acceder a la tabla "empresa", tienes los siguientes endpoints disponibles:
 
 
+#### Tabla "empresa"
 
-#### Obtener datos
-
-Para obtener todos los datos de la tabla "empresa", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/empresas
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "empresa".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "empresa", debes hacer una petición POST al siguiente endpoint:
 
@@ -291,9 +287,7 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "empresa", utiliza una petición PUT al siguiente endpoint:
 
@@ -323,39 +317,13 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-  
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "empresa", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/empresas/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "empresa". Esta acción eliminará permanentemente el registro seleccionado.
 
 
 
-### Tabla "marca"
 
-Para acceder a la tabla "marca", tienes los siguientes endpoints disponibles:
+#### Tabla "marca"
 
-
-
-#### Obtener datos
-
-Para obtener todos los datos de la tabla "marca", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/marcas
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "marca".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "marca", debes hacer una petición POST al siguiente endpoint:
 
@@ -379,9 +347,7 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "marca", utiliza una petición PUT al siguiente endpoint:
 
@@ -405,39 +371,13 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-  
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "marca", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/marcas/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "marca". Esta acción eliminará permanentemente el registro seleccionado.
 
 
 
-### Tabla "clase_alarma"
 
-Para acceder a la tabla "clase_alarma", tienes los siguientes endpoints disponibles:
+#### Tabla "clase_alarma"
 
-
-
-#### Obtener datos
-
-Para obtener todos los datos de la tabla "clase_alarma", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/clases_alarmas
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "clase_alarma".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "clase_alarma", debes hacer una petición POST al siguiente endpoint:
 
@@ -461,14 +401,14 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - MANTENIMIENTO_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "clase_alarma", utiliza una petición PUT al siguiente endpoint:
 
 ```
 http://127.0.0.5:3000/clases_alarmas/id
+
+
 ```
 
 Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el cuerpo (body) de la solicitud, incluye los siguientes datos en formato JSON:
@@ -487,39 +427,13 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 
 - MANTENIMIENTO_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
 
-  
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "clase_alarma", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/clases_alarmas/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "clase_alarma". Esta acción eliminará permanentemente el registro seleccionado.
 
 
 
-### Tabla "mantenimiento"
 
-Para acceder a la tabla "mantenimiento", puedes utilizar los siguientes endpoints:
+#### Tabla "mantenimiento"
 
-
-
-#### Obtener datos
-
-Para obtener todos los datos de la tabla "mantenimiento", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/mantenimientos
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "mantenimiento".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "mantenimiento", debes hacer una petición POST al siguiente endpoint:
 
@@ -540,9 +454,7 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - DESCRIPTION: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "mantenimiento", utiliza una petición PUT al siguiente endpoint:
 
@@ -563,39 +475,11 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 
 - DESCRIPTION: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio.
 
-  
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "mantenimiento", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/mantenimientos/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "mantenimiento". Esta acción eliminará permanentemente el registro seleccionado.
 
 
+#### Tabla "modelo"
 
-### Tabla "modelo"
-
-Para interactuar con la tabla "modelo", puedes utilizar los siguientes endpoints:
-
-
-
-#### Obtener datos
-
-Para obtener todos los datos de la tabla "modelo", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/modelos
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "modelo".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "modelo", debes hacer una petición POST al siguiente endpoint:
 
@@ -617,11 +501,9 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - NAME: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio.
 
-- LANZAMIENTO_ANIO: Debe ser un valor numérico entero que representa el año de lanzamiento del modelo. Es opcional
+- LANZAMIENTO_ANIO: Debe ser un valor numérico entero que representa el año de lanzamiento del modelo. Es opcional.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "modelo", utiliza una petición PUT al siguiente endpoint:
 
@@ -643,41 +525,16 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 
 - NAME: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio.
 
-- LANZAMIENTO_ANIO: Debe ser un valor numérico entero que representa el año de lanzamiento del modelo. Es opcional
-
-  
-
-#### Eliminar datos
-
-Para eliminar registros de la tabla "modelo", envía una petición DELETE al siguiente endpoint:
-
-```
-http://127.0.0.5:3000/modelos/id
-```
-
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "modelo". Esta acción eliminará permanentemente el registro seleccionado.
+- LANZAMIENTO_ANIO: Debe ser un valor numérico entero que representa el año de lanzamiento del modelo. Es opcional.
 
 
 
-### Tabla "proveedor"
-
-Para interactuar con la tabla "proveedor", puedes utilizar los siguientes endpoints:
 
 
 
-#### Obtener datos
+#### Tabla "proveedor"
 
-Para obtener todos los datos de la tabla "proveedor", realiza una petición GET al siguiente endpoint:
-
-```bash
-http://127.0.0.5:3000/proveedores
-```
-
-Esta solicitud te proporcionará una respuesta con todos los registros almacenados en la tabla "proveedor".
-
-
-
-#### Agregar datos
+##### Agregar datos
 
 Si deseas agregar nuevos datos a la tabla "proveedor", debes hacer una petición POST al siguiente endpoint:
 
@@ -707,9 +564,7 @@ En el cuerpo (body) de la solicitud, asegúrate de enviar los siguientes datos e
 
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-  
-
-#### Editar datos
+##### Editar datos
 
 Si necesitas realizar modificaciones en la tabla "proveedor", utiliza una petición PUT al siguiente endpoint:
 
@@ -735,15 +590,182 @@ Reemplaza "id" con el identificador de la fila que deseas editar. Además, en el
 - EMAIL: Debe ser una cadena de texto que represente una dirección de correo electrónico válida. Es opcional.
 - SITE_WEB: Debe ser una cadena de texto que represente una URL válida. Es opcional.
 
-#### Eliminar datos
 
-Para eliminar registros de la tabla "proveedor", envía una petición DELETE al siguiente endpoint:
+
+
+
+### Tabla "registro_mantenimiento"
+
+#### Agregar datos
+
+Para agregar nuevos datos a la tabla "registro_mantenimiento", realiza una petición POST al siguiente endpoint:
 
 ```
-http://127.0.0.5:3000/proveedores/id
+http://127.0.0.5:3000/registros_mantenimientos
 ```
 
-Sustituye "id" con el identificador de la fila que deseas eliminar de la tabla "proveedor". Esta acción eliminará permanentemente el registro seleccionado.
+En el cuerpo de la solicitud, envía los siguientes datos en formato JSON:
+
+```
+{
+  "ALARMA_ID": (obligatorio),
+  "COST": (obligatorio)
+}
+```
+
+ALARMA_ID:  Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+COST: Valor decimal que representa el costo del mantenimiento. Obligatorio.
+
+#### Editar datos
+
+Para editar datos en la tabla "registro_mantenimiento", realiza una petición PUT al siguiente endpoint:
+
+```
+http://127.0.0.5:3000/registros_mantenimientos/id
+```
+
+Reemplaza "id" con el identificador de la fila que deseas editar. En el cuerpo de la solicitud, incluye los siguientes datos en formato JSON:
+
+```
+{
+  "ALARMA_ID": (obligatorio),
+  "COST": (obligatorio)
+}
+```
+
+ALARMA_ID:  Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+COST: Valor decimal que representa el costo del mantenimiento. Obligatorio.
 
 
+
+### Tabla "sucursal_proveedor"
+
+#### Agregar datos
+
+Para agregar nuevos datos a la tabla "sucursal_proveedor", realiza una petición POST al siguiente endpoint:
+
+```
+http://127.0.0.5:3000/sucursales_proveedores
+```
+
+En el cuerpo de la solicitud, envía los siguientes datos en formato JSON:
+
+```
+{
+  "PROVEEDOR_ID": (obligatorio),
+  "NAME": (obligatorio),
+  "ADDRESS": (obligatorio),
+  "PHONE": (opcional),
+  "EMAIL": (opcional)
+}
+```
+
+PROVEEDOR_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+NAME: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio
+
+ADDRESS: Debe ser una cadena de texto, puede incluir letras, números y caracteres especiales. Es obligatorio.
+
+PHONE: Debe ser una cadena de texto que represente un número de teléfono válido. Es opcional.
+
+EMAIL: Debe ser una cadena de texto que represente una dirección de correo electrónico válida. Es opcional.
+
+
+
+#### Editar datos
+
+Para editar datos en la tabla "sucursal_proveedor", realiza una petición PUT al siguiente endpoint:
+
+```
+http://127.0.0.5:3000/sucursales_proveedores/id
+```
+
+Reemplaza "id" con el identificador de la fila que deseas editar. En el cuerpo de la solicitud, incluye los siguientes datos en formato JSON:
+
+```
+{
+  "PROVEEDOR_ID": (obligatorio),
+  "NAME": (obligatorio),
+  "ADDRESS": (obligatorio),
+  "PHONE": (opcional),
+  "EMAIL": (opcional)
+}
+```
+
+PROVEEDOR_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+NAME: Debe ser una cadena de texto, puede incluir letras y números. Es obligatorio
+
+ADDRESS: Debe ser una cadena de texto, puede incluir letras, números y caracteres especiales. Es obligatorio.
+
+PHONE: Debe ser una cadena de texto que represente un número de teléfono válido. Es opcional.
+
+EMAIL: Debe ser una cadena de texto que represente una dirección de correo electrónico válida. Es opcional.
+
+
+
+
+### Tabla "vehiculo"
+
+#### Agregar datos
+
+Para agregar nuevos datos a la tabla "vehiculo", realiza una petición POST al siguiente endpoint:
+
+```
+http://127.0.0.5:3000/vehiculos
+```
+
+En el cuerpo de la solicitud, envía los siguientes datos en formato JSON:
+
+```
+{
+  "EMPRESA_ID": (obligatorio),
+  "MODELO_ID": (obligatorio),
+  "SERIE_NUMERO": (obligatorio),
+  "PLATE": (obligatorio),
+  "STATE": (obligatorio)
+}
+```
+
+EMPRESA_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+MODELO_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+SERIE_NUMERO:  Debe ser una cadena de texto que represente un número de serie válido. Es opcional.
+
+PLATE: Cadena de texto que representa la placa del vehículo. Obligatorio.
+
+STATE: Debe ser una cadena de texto,  que solo puede incluir letras. Es obligatorio
+
+#### Editar datos
+
+Para editar datos en la tabla "vehiculo", realiza una petición PUT al siguiente endpoint:
+
+```
+http://127.0.0.5:3000/vehiculos/id
+```
+
+Reemplaza "id" con el identificador de la fila que deseas editar. En el cuerpo de la solicitud, incluye los siguientes datos en formato JSON:
+
+```
+{
+  "EMPRESA_ID": (obligatorio),
+  "MODELO_ID": (obligatorio),
+  "SERIE_NUMERO": (obligatorio),
+  "PLATE": (obligatorio),
+  "STATE": (obligatorio)
+}}
+```
+
+EMPRESA_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+MODELO_ID: Debe ser un valor numérico entero y mayor a cero. Es obligatorio.
+
+SERIE_NUMERO:  Debe ser una cadena de texto que represente un número de serie válido. Es opcional.
+
+PLATE: Cadena de texto que representa la placa del vehículo. Obligatorio.
+
+STATE: Debe ser una cadena de texto,  que solo puede incluir letras. Es obligatorio
 
