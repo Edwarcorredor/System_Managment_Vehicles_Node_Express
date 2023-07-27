@@ -100,6 +100,8 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
 
 ​		JWT_PRIVATE_KEY: Llave privada para la creación del token
 
+<img width="371" alt="Captura de pantalla 2023-07-26 223503" src="https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-vehiculos-autonomos/assets/104398132/bc375210-ecf0-44af-abae-9e7284fb4709">
+
 ## *Funcionamiento*
 
 
