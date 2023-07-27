@@ -48,6 +48,13 @@ export class Marcas {
             console.log(fields);
         });
     }
+    eliminar(id) {
+        conexion.query(/*sql*/ `DELETE FROM marca WHERE id = ?`, [id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "NAME" }),
@@ -77,7 +84,7 @@ __decorate([
     __metadata("design:type", String)
 ], Marcas.prototype, "pais_origen", void 0);
 __decorate([
-    Expose({ name: "WEB_SITE" }),
+    Expose({ name: "SITE_WEB" }),
     Transform(({ value }) => {
         let data = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9._%+-]*)*|undefined+$/g.test(value);
         if (data) {

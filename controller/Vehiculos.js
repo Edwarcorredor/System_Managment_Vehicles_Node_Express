@@ -50,6 +50,13 @@ export class Vehiculos {
             console.log(fields);
         });
     }
+    eliminar(id) {
+        conexion.query(/*sql*/ `DELETE FROM vehiculo WHERE id = ?`, [id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "EMPRESA_ID" }),

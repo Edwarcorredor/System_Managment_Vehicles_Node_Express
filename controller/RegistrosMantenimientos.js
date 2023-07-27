@@ -47,6 +47,13 @@ export class RegistrosMantenimientos {
             console.log(fields);
         });
     }
+    eliminar(id) {
+        conexion.query(/*sql*/ `DELETE FROM registro_mantenimiento WHERE id = ?`, [id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "ALARMA_ID" }),

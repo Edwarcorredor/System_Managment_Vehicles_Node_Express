@@ -50,6 +50,13 @@ export class Proveedores {
             console.log(fields);
         });
     }
+    eliminar(id) {
+        conexion.query(/*sql*/ `DELETE FROM proveedor WHERE id = ?`, [id], (err, data, fields) => {
+            console.log(err);
+            console.log(data);
+            console.log(fields);
+        });
+    }
 }
 __decorate([
     Expose({ name: "NAME" }),

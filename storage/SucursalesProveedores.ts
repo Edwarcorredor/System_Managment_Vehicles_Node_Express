@@ -108,4 +108,14 @@ export class SucursalesProveedores{
          console.log(fields)
         }); 
     }
+
+    eliminar(id:number){
+        conexion.query(/*sql*/`DELETE FROM sucursal_proveedor WHERE id = ?`,
+        [id],
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        }); 
+    }
 }

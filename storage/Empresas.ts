@@ -109,4 +109,13 @@ export class Empresas{
         }); 
     }
     
+    eliminar(id:number){
+        conexion.query(/*sql*/`DELETE FROM empresa WHERE id = ?`,
+        [id],
+        (err, data, fields)=>{
+         console.log(err)
+         console.log(data)
+         console.log(fields)
+        }); 
+    }
 }
