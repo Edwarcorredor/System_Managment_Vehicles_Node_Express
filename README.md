@@ -30,3 +30,38 @@ El objetivo general de este proyecto es desarrollar un sistema de control y moni
 <img width="727" alt="Captura de pantalla 2023-07-23 130151" src="https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-vehiculos-autonomos/assets/104398132/a746e2c2-e911-4f3f-afa2-ad741e266bcc">
 
 
+
+## *Instalación*
+
+Para instalar y utilizar este proyecto, siga los siguientes pasos:
+
+1. Asegúrese de tener [Node.js](https://nodejs.org/) instalado en su sistema.
+
+2. Clone este repositorio en su máquina local utilizando el siguiente comando.
+
+   ```bash
+   git clone https://github.com/Edwarcorredor/Sistema-de-control-y-monitoreo-de-vehiculos-autonomos.git
+   ```
+
+3. Abra el terminal en la carpeta raiz del repositorio e instale las siguientes dependencias.
+
+   ```bash
+   npm i -E -D express class-transformer class-validator dotenv jose mysql2 nodemon reflect-metadata
+   ```
+
+   - express: https://github.com/expressjs/express
+   - class-transformer: https://github.com/typestack/class-transformer
+   - class-validator: https://github.com/typestack/class-validator
+   - dotenv: https://github.com/motdotla/dotenv
+   - jose: https://github.com/panva/jose
+   - mysql2: https://github.com/sidorares/node-mysql2
+   - nodemon: https://github.com/remy/nodemon
+   - reflect-metadata: https://github.com/typestack/class-transformer
+
+   4.En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
+
+   `MY_CONFIG = {"hostname":"127.0.0.5", "port":3000}
+
+   MY_DATABASE = { "host": "localhost", "user": "root", "password": "", "database": "vehiculos_autonomos", "port": 3306}
+
+   JWT_PRIVATE_KEY = "Edwar"`
