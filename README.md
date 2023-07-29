@@ -101,10 +101,11 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
      }
  }`
 
+5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
+
 
 ```
 
-5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
 
    ```bash
    MY_CONFIG = {"hostname":"127.0.0.5", "port":3000}
