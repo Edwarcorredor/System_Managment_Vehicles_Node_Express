@@ -1,23 +1,23 @@
 import { Router } from 'express'
-import { middleMantenimientos } from '../middleware/middleMantenimientos.js'
+import { middlewareTablas } from '../middleware/middlewareTablas.js'
 
 const mantenimientosRouter = Router();
 
-mantenimientosRouter.get('/', middleMantenimientos, async(req,res)=>{
+mantenimientosRouter.get('/', middlewareTablas, async(req,res)=>{
   res.send(await req.body.allTabla);
 })
 
-mantenimientosRouter.post('/', middleMantenimientos, (req,res)=>{
+mantenimientosRouter.post('/', middlewareTablas, (req,res)=>{
   req.body.guardar = JSON.parse(req.data);
   res.json({status: 201, message: "Datos guardados"});
 });
 
-mantenimientosRouter.put('/:id', middleMantenimientos, (req,res)=>{
+mantenimientosRouter.put('/:id', middlewareTablas, (req,res)=>{
   req.body.actualizar(req.params.id, JSON.parse(req.data));
   res.json({status: 202, message: "Datos actualizados"});
 });
 
-mantenimientosRouter.delete('/:id', mantenimientosRouter, (req,res)=>{
+mantenimientosRouter.delete('/:id', middlewareTablas, (req,res)=>{
   req.body.eliminar(req.params.id);
   res.json({status: 202, message: "Datos eliminados"});
 });
