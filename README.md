@@ -88,8 +88,8 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
     npx tsc --init
   ```
    Y lo configura de la siguiente manera
-   
-   ```bash
+
+   ```json
     {
      "compilerOptions": {
     "target": "es6",
@@ -102,8 +102,8 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
      }
      }
    ```
-  
-  
+
+
 ```
 
 5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
