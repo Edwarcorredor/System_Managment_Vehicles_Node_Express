@@ -62,15 +62,11 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
 
 3. Abra el terminal en la carpeta raiz del repositorio e instale las siguientes dependencias.
    ```
-   npm init -y
-   ```
-
-   ```
    npm i -E -D express class-transformer class-validator dotenv jose mysql2 nodemon reflect-metadata typescript
    ```
 
    - express: https://github.com/expressjs/express
-
+   
    - class-transformer: https://github.com/typestack/class-transformer
 
    - class-validator: https://github.com/typestack/class-validator
@@ -85,25 +81,29 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
 
    - reflect-metadata: https://github.com/typestack/class-transformer
 
-   Luego editar el archivo package.json y agregarle `"type":"module"`
+     
 
    Ahora para crear el archivo tsconfig.json debe ejecutar el siguiente comando
-   ```bash
+  ```bash
     npx tsc --init
-   ```
+  ```
    Y lo configura de la siguiente manera
+   
    ```bash
     {
-  "compilerOptions": {
+     "compilerOptions": {
     "target": "es6",
     "module": "ES6",
-    "moduleResolution": "node",
+   "moduleResolution": "node",
     "outDir": "./controller",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-  }
-  }
+     }
+     }
+   ```
+  
+  
 ```
 
 5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
@@ -114,7 +114,7 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
    MY_DATABASE = { "host": "localhost", "user": "root", "password": "", "database": "vehiculos_autonomos", "port": 3306}
    
    JWT_PRIVATE_KEY = "Edwar"
-   ```
+```
 
 ​		MY_CONFIG: Corresponde al servidor que se creará con Express
 
