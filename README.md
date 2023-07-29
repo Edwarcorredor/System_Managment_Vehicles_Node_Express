@@ -94,16 +94,18 @@ Para instalar y utilizar este proyecto, siga los siguientes pasos:
    Y lo configura de la siguiente manera
    ```bash
     {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "ES6",
-    "moduleResolution": "node",
-    "outDir": "./controller",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
-  }```
+      "compilerOptions": {
+       "target": "es6",
+       "module": "ES6",
+       "moduleResolution": "node",
+       "outDir": "./controller",
+       "esModuleInterop": true,
+       "experimentalDecorators": true,
+       "emitDecoratorMetadata": true
+        }
+     }
+   ```
+  
 
 
 5. En el archivo .env del proyecto configurar las variables de entorno de acuerdo a su usuario y acceso a base de datos.
